@@ -46,24 +46,6 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  cursor: none;
-}
-
-/* ===== CURSOR ===== */
-#cur {
-  position: fixed;
-  width: 6px; height: 6px;
-  background: var(--gold);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width .22s, height .22s, background .22s, border-radius .22s;
-}
-body.hovering #cur {
-  width: 38px; height: 38px;
-  background: transparent;
-  border: 1px solid rgba(200,169,110,.4);
 }
 
 /* ===== NAV ===== */
