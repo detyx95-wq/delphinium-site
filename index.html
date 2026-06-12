@@ -768,6 +768,138 @@ footer {
 .reveal.d4 { transition-delay: .4s; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* =====================================================
+   DELPHINIUM — RESPONSIVE MOBILE
+   À coller juste avant </style> dans index.html
+   ===================================================== */
+
+/* Désactive le cursor custom sur écrans tactiles */
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto; }
+  #cur { display: none; }
+}
+
+@media (max-width: 768px) {
+
+  /* ── NAV ── */
+  nav {
+    padding: 0 24px;
+    height: 64px;
+  }
+  .nav-links { display: none; }
+  .nav-btn   { display: none; }
+
+  /* ── HERO ── */
+  #hero {
+    padding: 120px 24px 80px;
+  }
+  .hero-tags {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .hero-btns {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+  .btn-primary,
+  .btn-ghost {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* ── STATS ── */
+  #stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stat-item {
+    padding: 36px 24px;
+    border-right: 1px solid var(--brd);
+    border-bottom: 1px solid var(--brd);
+  }
+  .stat-item:nth-child(2n) { border-right: none; }
+  .stat-val { font-size: 40px; }
+
+  /* ── SECTIONS (padding global) ── */
+  .section {
+    padding: 72px 24px;
+  }
+
+  /* ── DEMO ── */
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+  .demo-left {
+    padding: 52px 24px;
+    border-right: none;
+    border-bottom: 1px solid var(--brd);
+  }
+  .demo-right iframe {
+    height: 420px;
+  }
+
+  /* ── SERVICES ── */
+  .services-intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── PROCESS ── */
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .process-visual { padding-top: 0; }
+
+  /* ── PRICING ── */
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .plan {
+    padding: 40px 28px;
+    border-right: none;
+    border-bottom: 1px solid var(--brd);
+  }
+  .plan:last-child { border-bottom: none; }
+
+  /* ── CTA ── */
+  #cta {
+    padding: 100px 24px;
+  }
+  .cta-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 16px 24px;
+  }
+}
+
 </style>
 </head>
 <body>
