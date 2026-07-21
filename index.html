@@ -1,368 +1,1594 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Configurateur bague Delphinium — chaton fleur, métal, pierre et gravure personnalisables en temps réel.">
-  <title>Configurateur — bague · Delphinium</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg:#07070f; --bg2:#0d0d1e;
-      --sur:rgba(255,255,255,.028);
-      --brd:rgba(255,255,255,.08); --brdh:rgba(255,255,255,.15);
-      --violet:#6b5ce7; --v1:#a99cf5;
-      --gold:#c8a96e; --gold1:#dfc98e;
-      --txt:#eeeeff; --txt2:rgba(238,238,255,.52); --txt3:rgba(238,238,255,.28);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin:0; font-family:'Inter',system-ui,-apple-system,sans-serif; font-weight:300;
-      background:var(--bg); color:var(--txt);
-      background-image:radial-gradient(1200px 500px at 78% -8%, rgba(107,92,231,.10), transparent 60%),
-                        radial-gradient(900px 500px at -5% 110%, rgba(200,169,110,.06), transparent 55%);
-      -webkit-font-smoothing:antialiased;
-    }
+<meta name="description" content="Delphinium Interactive — Configurateurs 3D premium pour e-commerce bijouterie et luxe.">
+<meta name="keywords" content="configurateur 3D, premium, luxe, e-commerce, Delphinium">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delphinium Interactive — Configurateurs 3D Premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Delphinium Interactive",
+  "url": "https://delphinium.pro",
+  "logo": "https://delphinium.pro/favicon.png"
+}
+</script>
+<style>
 
-    /* ── HEADER ── */
-    header {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:22px 40px; border-bottom:1px solid var(--brd);
-    }
-    .back-link {
-      display:flex; align-items:center; gap:8px;
-      font-size:11px; letter-spacing:.18em; text-transform:uppercase;
-      color:var(--txt3); text-decoration:none; transition:color .25s;
-    }
-    .back-link:hover { color:var(--txt2); }
-    .back-link::before { content:'←'; }
-    .brand-mark { display:flex; flex-direction:column; align-items:flex-end; gap:1px; }
-    .brand-mark-name {
-      font-family:'Playfair Display',serif; font-size:15px; letter-spacing:.06em; color:#ddd5f7;
-    }
-    .brand-mark-sub {
-      font-size:8px; letter-spacing:.36em; text-transform:uppercase; color:var(--gold);
-    }
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+img, svg { display: block; }
+a { text-decoration: none; }
+ul { list-style: none; }
+button { background: none; border: none; font-family: inherit; cursor: pointer; }
 
-    /* ── HERO / TITRE ── */
-    .hero {
-      max-width:1200px; margin:0 auto; padding:56px 40px 8px; text-align:center;
-    }
-    .eyebrow {
-      display:inline-flex; align-items:center; gap:12px;
-      font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:var(--gold);
-      margin-bottom:18px;
-    }
-    .eyebrow::before, .eyebrow::after { content:''; width:22px; height:1px; background:var(--gold); }
-    .hero h1 {
-      font-family:'Playfair Display',serif; font-weight:400; font-size:clamp(32px,4vw,48px);
-      line-height:1.12; letter-spacing:-.01em; margin:0 0 14px;
-    }
-    .hero h1 em { font-style:italic; color:var(--v1); }
-    .hero p {
-      max-width:480px; margin:0 auto; font-size:14px; line-height:1.8; color:var(--txt2);
-    }
+/* ===== TOKENS ===== */
+:root {
+  --bg:      #07070f;
+  --bg2:     #0d0d1e;
+  --sur:     rgba(255,255,255,.028);
+  --brd:     rgba(255,255,255,.08);
+  --brdh:    rgba(255,255,255,.15);
+  --violet:  #6b5ce7;
+  --vl:      #a99cf5;
+  --gold:    #c8a96e;
+  --goldl:   #dfc98e;
+  --txt:     #eeeeff;
+  --txt2:    rgba(238,238,255,.52);
+  --txt3:    rgba(238,238,255,.28);
+}
 
-    /* ── DIVIDER FLORAL (signature) ── */
-    .floral-divider {
-      width:100%; max-width:760px; margin:34px auto 8px; display:block;
-      opacity:.85; filter:drop-shadow(0 0 14px rgba(107,92,231,.15));
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .floral-divider picture source { display:none; }
-    }
+/* ===== BASE ===== */
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
 
-    /* ── LAYOUT CONFIGURATEUR ── */
-    .wrap {
-      display:flex; flex-wrap:wrap; gap:22px;
-      padding:28px 40px 90px; max-width:1200px; margin:0 auto;
-    }
-    .viewer { flex:1 1 460px; }
-    .viewer-frame {
-      position:relative; border-radius:14px; border:1px solid var(--brd);
-      background:var(--bg2); overflow:hidden;
-      transition:border-color .5s, box-shadow .5s;
-    }
-    .viewer-frame.pulse {
-      border-color:rgba(200,169,110,.5);
-      box-shadow:0 0 0 1px rgba(200,169,110,.15), 0 0 32px rgba(200,169,110,.12);
-    }
-    iframe { width:100%; height:670px; border:0; display:block; }
-    .panel { flex:1 1 320px; }
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 64px;
+  transition: background .4s, border-bottom .4s;
+}
+nav.scrolled {
+  background: rgba(7,7,15,.93);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--brd);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+.nav-logo-text { display: flex; flex-direction: column; gap: 1px; }
+.nav-logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: .08em;
+  color: #ddd5f7;
+  line-height: 1;
+}
+.nav-logo-sub {
+  font-size: 8px;
+  letter-spacing: .38em;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.nav-links {
+  display: flex;
+  gap: 40px;
+}
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  transition: color .25s;
+}
+.nav-links a:hover { color: var(--txt); }
+.nav-btn {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(200,169,110,.32);
+  padding: 10px 24px;
+  transition: background .25s, color .25s;
+}
+.nav-btn:hover { background: var(--gold); color: var(--bg); }
 
-    .status { font-size:13px; color:var(--txt2); margin:0 0 22px; min-height:18px; }
+/* ===== HERO ===== */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 64px 100px;
+  position: relative;
+  overflow: hidden;
+}
+/* subtle ambient glow behind text */
+#hero::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -55%);
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(107,92,231,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+#hero-canvas-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: .6;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 10px;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 36px;
+  position: relative;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 26px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -.02em;
+  margin-bottom: 28px;
+  max-width: 820px;
+  position: relative;
+}
+.hero h1 em { font-style: italic; color: var(--vl); }
+.hero-desc {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--txt2);
+  max-width: 500px;
+  margin: 0 auto 52px;
+  position: relative;
+}
+.hero-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  position: relative;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--bg);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  font-weight: 400;
+  transition: background .25s;
+}
+.btn-primary:hover { background: var(--goldl); }
+.btn-ghost {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color .25s;
+}
+.btn-ghost::after { content: '→'; }
+.btn-ghost:hover { color: var(--txt2); }
 
-    .group {
-      background:var(--bg2); border:1px solid var(--brd); border-radius:14px;
-      padding:18px; margin-bottom:16px;
-    }
-    .group h2 {
-      font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--gold);
-      font-weight:600; margin:0 0 14px;
-    }
+/* pill tags below buttons */
+.hero-tags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 44px;
+  position: relative;
+}
+.hero-tag-pill {
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  border: 1px solid var(--brd);
+  padding: 7px 16px;
+}
 
-    .chips { display:flex; flex-wrap:wrap; gap:10px; }
-    .chip {
-      display:flex; align-items:center; gap:8px; padding:7px 13px 7px 8px;
-      border:1.5px solid var(--brd); border-radius:999px; background:var(--sur);
-      color:var(--txt); cursor:pointer; font-size:14px;
-      transition:border-color .18s, background .18s, color .18s, transform .18s;
-    }
-    .chip:hover { border-color:var(--brdh); background:rgba(255,255,255,.05); }
-    .chip.active {
-      border-color:var(--gold); background:rgba(200,169,110,.14); color:var(--gold1);
-      animation:bloom .45s ease-out;
-    }
-    .chip:focus-visible { outline:2px solid var(--gold1); outline-offset:2px; }
-    .dot { width:20px; height:20px; border-radius:50%; border:1px solid rgba(255,255,255,.18); flex:none; }
+.live-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+.live-label { display: flex; align-items: center; gap: 8px; }
 
-    @keyframes bloom {
-      0%   { transform:scale(1); }
-      45%  { transform:scale(1.06); }
-      100% { transform:scale(1); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .chip.active { animation:none; }
-      .viewer-frame { transition:none; }
-    }
+/* scroll indicator */
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 9px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--txt3);
+}
+.scroll-line {
+  width: 1px;
+  height: 44px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(238,238,255,.07);
+}
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--gold);
+  animation: scrollDown 1.9s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes scrollDown {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(220%); }
+}
 
-    .engrave { display:flex; flex-direction:column; gap:6px; }
-    .engrave input {
-      padding:11px 13px; border:1.5px solid var(--brd); border-radius:10px;
-      background:var(--bg); color:var(--txt); font:inherit;
-    }
-    .engrave input::placeholder { color:var(--txt3); }
-    .engrave input:focus {
-      outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,169,110,.15);
-    }
-    .counter { font-size:12px; color:var(--txt3); text-align:right; }
-    .counter.max { color:var(--gold1); }
-    .hint { font-size:12px; color:var(--txt2); margin-top:10px; line-height:1.5; }
-    code { background:rgba(255,255,255,.06); color:var(--gold1); padding:1px 5px; border-radius:4px; font-size:12px; }
 
-    .readout { font-size:13px; color:var(--txt); line-height:1.9; }
-    .readout b { color:var(--txt2); font-weight:600; }
-    .readout span { transition:opacity .3s; }
-    .readout span.swap { opacity:0; }
 
-    /* ── FOOTER ── */
-    footer {
-      padding:30px 40px; border-top:1px solid var(--brd);
-      display:flex; align-items:center; justify-content:space-between;
-      font-size:11px; color:var(--txt3);
-    }
-    footer a { color:var(--txt3); text-decoration:none; transition:color .25s; }
-    footer a:hover { color:var(--txt2); }
+/* ===== STATS ===== */
+#stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--brd);
+}
+.stat-item {
+  padding: 56px 44px;
+  border-right: 1px solid var(--brd);
+}
+.stat-item:last-child { border-right: none; }
+.stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 54px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--txt);
+  margin-bottom: 12px;
+}
+.stat-val sup { font-size: 24px; color: var(--gold); vertical-align: super; }
+.stat-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--txt3);
+  max-width: 160px;
+}
 
-    @media (max-width:768px) {
-      header { padding:18px 20px; }
-      .hero { padding:40px 20px 4px; }
-      .wrap { padding:20px 20px 60px; }
-      footer { padding:24px 20px; flex-direction:column; gap:12px; }
-    }
-  </style>
+/* ===== SECTIONS SHARED ===== */
+.section {
+  padding: 110px 64px;
+}
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 9px;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 18px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 3.8vw, 58px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -.015em;
+}
+h2 em { font-style: italic; color: var(--vl); }
+
+/* ===== DEMO ===== */
+#demo {
+  background: var(--bg2);
+  border-top: 1px solid var(--brd);
+  border-bottom: 1px solid var(--brd);
+}
+.demo-grid {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+}
+.demo-left {
+  padding: 80px 56px;
+  border-right: 1px solid var(--brd);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.demo-left h2 { font-size: clamp(28px, 2.8vw, 44px); margin-bottom: 20px; }
+.demo-left p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--txt2);
+  margin-bottom: 32px;
+}
+.demo-list { margin-bottom: 44px; }
+.demo-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--txt2);
+  line-height: 1.6;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--brd);
+}
+.demo-list li:first-child { border-top: 1px solid var(--brd); }
+.demo-list li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+.demo-right { position: relative; }
+.demo-right iframe {
+  display: block;
+  width: 100%;
+  height: 680px;
+  border: none;
+}
+.demo-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(7,7,15,.82);
+  border: 1px solid var(--brd);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 9px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--txt3);
+}
+
+/* e-commerce product card */
+.demo-right:has(.bague-card) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 48px;
+}
+.bague-card {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg2);
+  border: 1px solid var(--brd);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .3s ease, transform .4s ease, box-shadow .4s ease;
+}
+.bague-card:hover {
+  border-color: var(--brdh);
+  transform: translateY(-5px);
+  box-shadow: 0 24px 60px -30px rgba(0,0,0,.8);
+}
+.bague-card-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: radial-gradient(120% 100% at 50% 28%, #1a1a32 0%, #0b0b18 74%);
+}
+.bague-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(.2,.6,.2,1);
+}
+.bague-card:hover .bague-card-media img { transform: scale(1.06); }
+.bague-card-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .6s cubic-bezier(.2,.6,.2,1);
+}
+.bague-card:hover .bague-card-fallback { transform: scale(1.06); }
+.bague-card-fallback .ring {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 15px solid var(--gold);
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.08) inset;
+}
+.bague-card-fallback .ring::before {
+  content: '';
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--vl);
+  box-shadow: 0 0 20px 3px rgba(169,156,245,.5);
+}
+.bague-card-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  background: rgba(7,7,15,.72);
+  border: 1px solid var(--brd);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--txt2);
+}
+.bague-card-hover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 26px 16px 16px;
+  text-align: center;
+  background: linear-gradient(to top, rgba(7,7,15,.92) 0%, rgba(7,7,15,0) 100%);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--goldl);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.bague-card:hover .bague-card-hover { opacity: 1; transform: translateY(0); }
+.bague-card-info { padding: 22px 24px 26px; }
+.bague-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.bague-card-head h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--txt);
+}
+.bague-card-price {
+  font-size: 13px;
+  letter-spacing: .04em;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.bague-card-info p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--txt3);
+  margin-bottom: 18px;
+}
+.bague-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--txt2);
+  transition: color .25s ease;
+}
+.bague-card-cta i {
+  font-style: normal;
+  transition: transform .25s ease;
+}
+.bague-card:hover .bague-card-cta { color: var(--gold); }
+.bague-card:hover .bague-card-cta i { transform: translateX(4px); }
+
+/* ===== SERVICES ===== */
+.services-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 72px;
+}
+.services-intro-right {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--txt2);
+  padding-bottom: 4px;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--brd);
+  border-left: 1px solid var(--brd);
+}
+.service-card {
+  padding: 44px 36px 52px;
+  border-right: 1px solid var(--brd);
+  border-bottom: 1px solid var(--brd);
+  position: relative;
+  transition: background .3s;
+}
+.service-card:hover { background: var(--sur); }
+.service-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  color: var(--txt3);
+  letter-spacing: .1em;
+  margin-bottom: 40px;
+}
+.service-icon {
+  width: 26px;
+  height: 26px;
+  margin-bottom: 24px;
+  color: var(--vl);
+  stroke: currentColor;
+  stroke-width: 1.2;
+  fill: none;
+}
+.service-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--txt);
+  margin-bottom: 12px;
+}
+.service-card p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--txt2);
+}
+.service-arrow {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  color: var(--gold);
+  font-size: 15px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity .25s, transform .25s;
+}
+.service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
+
+/* ===== PROCESS ===== */
+#process { border-top: 1px solid var(--brd); }
+.process-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: start;
+}
+.process-steps { margin-top: 52px; }
+.process-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--brd);
+}
+.process-step:first-child { border-top: 1px solid var(--brd); }
+.step-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  color: var(--txt3);
+  padding-top: 2px;
+}
+.step-body h3 {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--txt);
+  margin-bottom: 8px;
+}
+.step-body p { font-size: 13px; line-height: 1.8; color: var(--txt2); }
+.process-visual { padding-top: 80px; }
+.process-canvas-box {
+  border: 1px solid var(--brd);
+  overflow: hidden;
+}
+.process-canvas-box canvas {
+  display: block;
+  width: 100%;
+  height: 340px;
+}
+.process-stat-box {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 28px 32px;
+  border: 1px solid var(--brd);
+  border-top: none;
+}
+.process-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--txt);
+}
+.process-stat-label {
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  line-height: 1.6;
+}
+.process-note {
+  padding: 24px 32px;
+  border: 1px solid var(--brd);
+  border-top: none;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--txt2);
+}
+.process-note strong { color: var(--txt); font-weight: 500; }
+
+/* ===== PRICING ===== */
+#pricing { border-top: 1px solid var(--brd); }
+.pricing-head { max-width: 520px; margin-bottom: 60px; }
+.pricing-head p { font-size: 14px; line-height: 1.85; color: var(--txt2); margin-top: 20px; }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--brd);
+}
+.plan {
+  padding: 52px 48px;
+  border-right: 1px solid var(--brd);
+  transition: background .3s;
+}
+.plan:last-child { border-right: none; }
+.plan:hover { background: var(--sur); }
+.plan-tier {
+  font-size: 9px;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  margin-bottom: 28px;
+}
+.plan-badge {
+  display: inline-block;
+  font-size: 8px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(200,169,110,.28);
+  padding: 4px 10px;
+  margin-bottom: 12px;
+}
+.plan-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 54px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--txt);
+  margin-bottom: 6px;
+}
+.plan-price span { font-size: 20px; color: var(--txt3); }
+.plan-from { font-size: 11px; color: var(--txt3); margin-bottom: 36px; }
+.plan-features { border-top: 1px solid var(--brd); margin-bottom: 36px; }
+.plan-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--brd);
+  font-size: 13px;
+  color: var(--txt2);
+  line-height: 1.5;
+}
+.plan-features li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+.plan-cta {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: 14px;
+  font-weight: 400;
+  transition: all .25s;
+}
+.plan-cta.primary { background: var(--gold); color: var(--bg); }
+.plan-cta.primary:hover { background: var(--goldl); }
+.plan-cta.outline { border: 1px solid var(--brd); color: var(--txt2); }
+.plan-cta.outline:hover { border-color: var(--brdh); color: var(--txt); }
+
+
+
+/* ===== CTA ===== */
+#cta {
+  padding: 140px 64px;
+  text-align: center;
+  border-top: 1px solid var(--brd);
+}
+#cta h2 { font-size: clamp(40px, 5.5vw, 72px); margin-bottom: 20px; }
+#cta p { font-size: 16px; color: var(--txt2); margin-bottom: 56px; }
+.cta-row { display: flex; align-items: center; justify-content: center; gap: 32px; }
+.cta-email {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  transition: color .25s;
+}
+.cta-email:hover { color: var(--txt2); }
+
+/* ===== CONTACT ===== */
+#contact { border-top: 1px solid var(--brd); }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: start;
+}
+.contact-left h2 { margin-bottom: 20px; }
+.contact-left p { font-size: 14px; line-height: 1.9; color: var(--txt2); margin-bottom: 44px; }
+.contact-detail { margin-bottom: 18px; }
+.contact-detail-label {
+  font-size: 9px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  margin-bottom: 4px;
+}
+.contact-detail-val { font-size: 14px; color: var(--txt2); }
+.field { margin-bottom: 24px; }
+.field label {
+  display: block;
+  font-size: 9px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  margin-bottom: 10px;
+}
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--brd);
+  color: var(--txt);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 10px 0;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color .25s;
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus { border-color: rgba(200,169,110,.5); }
+.field input::placeholder,
+.field textarea::placeholder { color: var(--txt3); }
+.field textarea { resize: vertical; min-height: 96px; }
+.field select { cursor: pointer; }
+.field select option { background: #1a1a2e; color: var(--txt); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.submit-btn {
+  width: 100%;
+  background: var(--gold);
+  color: var(--bg);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: 15px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background .25s;
+}
+.submit-btn:hover { background: var(--goldl); }
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 40px 64px;
+  border-top: 1px solid var(--brd);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer-logo-svg { width: 30px; height: 30px; }
+.footer-logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--txt);
+  letter-spacing: .04em;
+}
+.footer-logo-sub {
+  font-size: 7px;
+  letter-spacing: .38em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.footer-links { display: flex; gap: 28px; }
+.footer-links a {
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  transition: color .25s;
+}
+.footer-links a:hover { color: var(--txt2); }
+.footer-copy { font-size: 11px; color: var(--txt3); }
+
+/* ===== REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1);
+}
+.reveal.d1 { transition-delay: .1s; }
+.reveal.d2 { transition-delay: .2s; }
+.reveal.d3 { transition-delay: .3s; }
+.reveal.d4 { transition-delay: .4s; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+   DELPHINIUM — RESPONSIVE MOBILE
+  
+/* Désactive le cursor custom sur écrans tactiles */
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto; }
+  #cur { display: none; }
+}
+
+@media (max-width: 768px) {
+
+  /* ── NAV ── */
+  nav {
+    padding: 0 24px;
+    height: 64px;
+  }
+  .nav-links { display: none; }
+  .nav-btn   { display: none; }
+
+  /* ── HERO ── */
+  #hero {
+    padding: 120px 24px 80px;
+  }
+  .hero-tags {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .hero-btns {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+  .btn-primary,
+  .btn-ghost {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* ── STATS ── */
+  #stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stat-item {
+    padding: 36px 24px;
+    border-right: 1px solid var(--brd);
+    border-bottom: 1px solid var(--brd);
+  }
+  .stat-item:nth-child(2n) { border-right: none; }
+  .stat-val { font-size: 40px; }
+
+  /* ── SECTIONS (padding global) ── */
+  .section {
+    padding: 72px 24px;
+  }
+
+  /* ── DEMO ── */
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+  .demo-left {
+    padding: 52px 24px;
+    border-right: none;
+    border-bottom: 1px solid var(--brd);
+  }
+  .demo-right iframe {
+    height: 420px;
+  }
+  .demo-right:has(.bague-card) { padding: 40px 24px; }
+
+  /* ── SERVICES ── */
+  .services-intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── PROCESS ── */
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .process-visual { padding-top: 0; }
+
+  /* ── PRICING ── */
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .plan {
+    padding: 40px 28px;
+    border-right: none;
+    border-bottom: 1px solid var(--brd);
+  }
+  .plan:last-child { border-bottom: none; }
+
+  /* ── CTA ── */
+  #cta {
+    padding: 100px 24px;
+  }
+  .cta-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 16px 24px;
+  }
+}
+
+</style>
 </head>
 <body>
 
-  <header>
-    <a href="/" class="back-link">Retour au site</a>
-    <div class="brand-mark">
-      <span class="brand-mark-name">Delphinium</span>
-      <span class="brand-mark-sub">Interactive</span>
-    </div>
-  </header>
+<!-- CURSOR -->
+<div id="cur"></div>
 
-  <div class="hero">
-    <p class="eyebrow">Collection fleur</p>
-    <h1>Configurez votre <em>bague</em></h1>
-    <p>Métal, pierre et forme du chaton en temps réel — puis gravez l'intérieur de l'anneau à votre message.</p>
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="Delphinium" class="nav-logo-img">
+    <div class="nav-logo-text">
+      <span class="nav-logo-name">Delphinium</span>
+      <span class="nav-logo-sub">Interactive</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#demo">Démo live</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Méthode</a></li>
+    <li><a href="#pricing">Tarifs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-btn">Démarrer un projet</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero" class="hero">
+  <canvas id="hero-canvas-bg"></canvas>
+  <p class="hero-eyebrow reveal">Configurateurs 3D · Expériences interactives</p>
+  <h1 class="reveal d1">Donnez vie à vos produits<br>en <em>trois dimensions</em></h1>
+  <p class="hero-desc reveal d2">Nous créons des configurateurs 3D sur-mesure qui transforment l'expérience d'achat — vos clients visualisent, personnalisent et achètent avec confiance.</p>
+  <div class="hero-btns reveal d3">
+    <a href="#contact" class="btn-primary">Demander une démo</a>
+    <a href="#demo" class="btn-ghost">Voir la démo live</a>
   </div>
+  <div class="hero-tags reveal d4">
+    <span class="hero-tag-pill">Déploiement 3D · Temps réel</span>
+    <span class="hero-tag-pill">Livraison ~14 jours</span>
+    <span class="hero-tag-pill">Shopify · WooCommerce · PrestaShop</span>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Défiler</span>
+  </div>
+</section>
 
-  <picture>
-    <source srcset="assets/liseres-fleur.gif" media="(prefers-reduced-motion: no-preference)">
-    <img class="floral-divider" src="assets/liseres-fleur.png" alt="" role="presentation">
-  </picture>
 
-  <div class="wrap">
-    <div class="viewer">
-      <div class="viewer-frame" id="viewerFrame">
-        <iframe id="vectary_embed"
-                src="https://app.vectary.com/p/3XBDSWLuqFpKqLr93wCTsp"
-                allow="xr-spatial-tracking; fullscreen;"
-                title="Configurateur 3D — bague Delphinium"></iframe>
+
+<!-- ── STATS ── -->
+<div id="stats">
+  <div class="stat-item reveal">
+    <div class="stat-val"><sup>+</sup>25%</div>
+    <div class="stat-desc">Taux de conversion avec configurateur 3D interactif</div>
+  </div>
+  <div class="stat-item reveal d1">
+    <div class="stat-val"><sup>−</sup>30%</div>
+    <div class="stat-desc">Taux de retour produit constaté en moyenne</div>
+  </div>
+  <div class="stat-item reveal d2">
+    <div class="stat-val"><sup>+</sup>94%</div>
+    <div class="stat-desc">Engagement sur les pages produit avec configurateur</div>
+  </div>
+  <div class="stat-item reveal d3">
+    <div class="stat-val">~14j</div>
+    <div class="stat-desc">Délai de livraison garanti contractuellement</div>
+  </div>
+</div>
+
+<!-- ── DEMO ── -->
+<section id="demo">
+  <div class="demo-grid">
+    <div class="demo-left">
+      <p class="section-label reveal">Démo interactive</p>
+      <h2 class="reveal d1">Touchez,<br>tournez,<br><em>configurez</em></h2>
+      <p class="reveal d2">Un exemple réel de configurateur 3D intégré sur une page web. Faites tourner le modèle, zoomez, explorez — c'est exactement ce que verront vos clients.</p>
+      <ul class="demo-list reveal d3">
+        <li>Rotation 360° par glisser-déposer</li>
+        <li>Zoom et panoramique multi-touch</li>
+        <li>Rendu photoréaliste temps réel</li>
+        <li>Compatible mobile &amp; tablette</li>
+        <li>Chargement optimisé &lt; 3 secondes</li>
+      </ul>
+      <a href="#contact" class="btn-primary reveal d4" style="align-self:flex-start">Créer mon configurateur</a>
+    </div>
+    <div class="demo-right">
+      <iframe
+        src="https://app.vectary.com/p/2yVn04SUkDqOO85BQ6W8dx"
+        frameborder="0"
+        allow="autoplay; xr-spatial-tracking"
+        allowfullscreen
+        title="Démo configurateur 3D — stylo premium"
+      ></iframe>
+      <div class="demo-badge">
+        <div class="live-dot"></div>
+        <span>Configurateur live · Premium</span>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="panel">
-      <p class="status" id="status">Initialisation…</p>
+<!-- ── SERVICES ── -->
+<section id="services" class="section">
+  <div class="services-intro">
+    <div>
+      <p class="section-label reveal">Ce que nous créons</p>
+      <h2 class="reveal d1">Des expériences<br>qui <em>convertissent</em></h2>
+    </div>
+    <p class="services-intro-right reveal d2">Chaque projet est développé sur-mesure. De la modélisation 3D à l'intégration e-commerce, nous couvrons l'intégralité du cycle de A à Z.</p>
+  </div>
+  <div class="services-grid">
 
-      <div class="group">
-        <h2>Métal</h2>
-        <div class="chips" id="metals"></div>
-      </div>
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <svg class="service-icon" viewBox="0 0 26 26">
+        <path d="M13 2L24 8v10L13 24 2 18V8z"/>
+        <path d="M13 2v22M2 8l22 0M2 18l22 0" opacity=".3"/>
+      </svg>
+      <h3>Configurateur 3D Produit</h3>
+      <p>Personnalisation couleurs, matières et options en temps réel sur un modèle photoréaliste de votre produit.</p>
+      <span class="service-arrow">→</span>
+    </div>
 
-      <div class="group">
-        <h2>Pierre</h2>
-        <div class="chips" id="stones"></div>
-      </div>
+    <div class="service-card reveal d1">
+      <div class="service-num">02</div>
+      <svg class="service-icon" viewBox="0 0 26 26">
+        <rect x="2" y="5" width="22" height="17" rx="1.5"/>
+        <path d="M2 9h22" opacity=".4"/>
+        <circle cx="13" cy="15.5" r="4.5"/>
+      </svg>
+      <h3>Visualiseur AR Mobile</h3>
+      <p>Vos clients projettent le produit dans leur espace réel depuis leur smartphone, sans application à installer.</p>
+      <span class="service-arrow">→</span>
+    </div>
 
-      <div class="group">
-        <h2>Forme</h2>
-        <div class="chips" id="shapes"></div>
-      </div>
+    <div class="service-card reveal d2">
+      <div class="service-num">03</div>
+      <svg class="service-icon" viewBox="0 0 26 26">
+        <path d="M3 22V12l10-8 10 8v10"/>
+        <rect x="9" y="15" width="8" height="7"/>
+      </svg>
+      <h3>Showroom Virtuel</h3>
+      <p>Un espace de vente immersif où vos clients explorent toute votre collection en trois dimensions.</p>
+      <span class="service-arrow">→</span>
+    </div>
 
-      <div class="group">
-        <h2>Gravure</h2>
-        <div class="engrave">
-          <input id="engrave" maxlength="20" placeholder="ex : S + R — 09.2021" autocomplete="off">
-          <div class="counter"><span id="count">0</span>/20</div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <svg class="service-icon" viewBox="0 0 26 26">
+        <circle cx="13" cy="13" r="11"/>
+        <path d="M13 2v22M2 13h22" opacity=".35"/>
+        <path d="M7 13c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+      </svg>
+      <h3>Intégration E-commerce</h3>
+      <p>Connexion native Shopify, WooCommerce et PrestaShop. Votre configurateur en ligne en deux semaines.</p>
+      <span class="service-arrow">→</span>
+    </div>
+
+    <div class="service-card reveal d1">
+      <div class="service-num">05</div>
+      <svg class="service-icon" viewBox="0 0 26 26">
+        <polyline points="3,22 9,12 13,17 17,9 23,22"/>
+        <circle cx="9" cy="12" r="1.5" fill="currentColor" opacity=".6"/>
+        <circle cx="17" cy="9" r="1.5" fill="currentColor" opacity=".6"/>
+      </svg>
+      <h3>Analytics &amp; Optimisation</h3>
+      <p>Tableau de bord pour suivre les options configurées, les points de friction et optimiser votre tunnel.</p>
+      <span class="service-arrow">→</span>
+    </div>
+
+    <div class="service-card reveal d2">
+      <div class="service-num">06</div>
+      <svg class="service-icon" viewBox="0 0 26 26">
+        <path d="M13 2l2.5 5.5 6 .8-4.3 4.2 1 6-5.2-2.7-5.2 2.7 1-6-4.3-4.2 6-.8z"/>
+      </svg>
+      <h3>Modélisation 3D Premium</h3>
+      <p>Création de vos assets 3D haute fidélité : modélisation, textures PBR et rendus animés sur-mesure.</p>
+      <span class="service-arrow">→</span>
+    </div>
+
+  </div>
+</section>
+  
+<!-- ── DEMO BIJOU ── -->
+<section id="demo-bijou">
+  <div class="demo-grid">
+
+    <div class="demo-left">
+      <p class="section-label reveal">Démo bijouterie</p>
+      <h2 class="reveal d1">Métal, pierre,<br><em>gravure</em> —<br>en temps réel</h2>
+      <p class="reveal d2">Choisissez le métal, la pierre centrale et personnalisez la gravure intérieure. Le configurateur s'adapte instantanément — exactement ce que verront les clients de votre boutique.</p>
+      <ul class="demo-list reveal d3">
+        <li>Sélection métal : or jaune, blanc, rosé</li>
+        <li>Choix de pierre : diamant, saphir, émeraude, rubis</li>
+        <li>Gravure intérieure personnalisée</li>
+        <li>Vue AR sur mobile intégrée</li>
+        <li>Rendu photoréaliste temps réel</li>
+      </ul>
+      <a href="#contact" class="btn-primary reveal d4" style="align-self:flex-start; margin-top:8px;">
+        Créer mon configurateur bijou
+      </a>
+    </div>
+
+    <div class="demo-right">
+      <a href="bague/index.html" class="bague-card reveal" aria-label="Configurer la bague en 3D — voir le produit">
+        <div class="bague-card-media">
+          <div class="bague-card-fallback" aria-hidden="true"><span class="ring"></span></div>
+          <img src="bague/assets/bague-produit.jpg" alt="Bague or & pierre précieuse — Delphinium" loading="lazy" onerror="this.style.display='none'">
+          <span class="bague-card-badge"><span class="live-dot"></span>Configurable 3D</span>
+          <span class="bague-card-hover">Configurer en 3D →</span>
         </div>
-        <p class="hint">Écrit en direct dans l'objet Texte 3D <code>3D Text</code> de la scène.
-        Si rien ne bouge, vérifie le nom de l'objet dans Studio et reporte-le dans <code>TEXT_OBJECT</code>.</p>
-      </div>
+        <div class="bague-card-info">
+          <div class="bague-card-head">
+            <h3>Bague signature</h3>
+            <span class="bague-card-price">1 290 – 1 690 €</span>
+          </div>
+          <p>Or jaune, blanc ou rosé · diamant, saphir, émeraude · gravure incluse</p>
+          <span class="bague-card-cta">Personnaliser en 3D <i>→</i></span>
+        </div>
+      </a>
+    </div>
 
-      <div class="group">
-        <h2>État actuel</h2>
-        <div class="readout" id="readout">—</div>
+  </div>
+</section>
+  
+<!-- ── PROCESS ── -->
+<section id="process" class="section">
+  <div class="process-grid">
+    <div>
+      <p class="section-label reveal">Notre méthode</p>
+      <h2 class="reveal d1">De l'idée au<br><em>lancement</em></h2>
+      <div class="process-steps">
+        <div class="process-step reveal d1">
+          <span class="step-num">01</span>
+          <div class="step-body">
+            <h3>Audit &amp; Stratégie</h3>
+            <p>Analyse de votre catalogue, enjeux de conversion et contraintes techniques. Définition du ROI cible.</p>
+          </div>
+        </div>
+        <div class="process-step reveal d2">
+          <span class="step-num">02</span>
+          <div class="step-body">
+            <h3>Conception &amp; Modélisation</h3>
+            <p>Création des assets 3D haute fidélité, design de l'interface et prototypage validé avec vous.</p>
+          </div>
+        </div>
+        <div class="process-step reveal d3">
+          <span class="step-num">03</span>
+          <div class="step-body">
+            <h3>Déploiement 3D</h3>
+            <p>Moteur 3D temps réel optimisé pour le web : performances, SEO et compatibilité multi-device.</p>
+          </div>
+        </div>
+        <div class="process-step reveal d4">
+          <span class="step-num">04</span>
+          <div class="step-body">
+            <h3>Intégration &amp; Lancement</h3>
+            <p>Déploiement sur votre plateforme e-commerce, tests A/B et suivi des premiers résultats.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-visual reveal d1">
+      <div class="process-stat-box">
+        <div class="process-stat-num">~14</div>
+        <div class="process-stat-label">jours<br>délai garanti</div>
+      </div>
+      <div class="process-canvas-box">
+        <canvas id="proc-canvas"></canvas>
+      </div>
+      <div class="process-note">
+        <strong>Livraison garantie en 2 semaines.</strong> Du brief signé à la mise en ligne de votre configurateur — délai garanti contractuellement sur nos offres standard.
       </div>
     </div>
   </div>
+</section>
 
-  <footer>
-    <span>© 2026 Delphinium Interactive · Paris</span>
-    <a href="/#contact">Un projet similaire ? Contactez-nous</a>
-  </footer>
+<!-- ── PRICING ── -->
+<section id="pricing" class="section">
+  <div class="pricing-head">
+    <p class="section-label reveal">Tarifs</p>
+    <h2 class="reveal d1">Des offres claires,<br><em>sans surprise</em></h2>
+    <p class="reveal d2">Ces tarifs constituent une base de départ. Nous établissons un devis précis après notre premier échange, sans engagement.</p>
+  </div>
+  <div class="pricing-grid reveal d1">
+    <div class="plan">
+      <div class="plan-tier">Offre Pro</div>
+      <div class="plan-price">1 290<span> €</span></div>
+      <div class="plan-from">One-shot · HT</div>
+      <ul class="plan-features">
+        <li>1 produit configurable</li>
+        <li>8 variants de personnalisation</li>
+        <li>Interactions de base</li>
+        <li>Embed glTF optimisé</li>
+      </ul>
+      <div style="padding: 16px 0; border-top: 1px solid var(--brd); font-size: 12px; color: var(--txt3); display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;">
+        <span style="letter-spacing:.1em; text-transform:uppercase; font-size:10px;">Maintenance</span>
+        <span style="color: var(--txt2);">79 € <span style="color:var(--txt3)">/mois</span></span>
+      </div>
+      <a href="#contact" class="plan-cta outline">Demander un devis</a>
+    </div>
+    <div class="plan">
+      <div class="plan-badge">Recommandé</div>
+      <div class="plan-tier">Offre Premium</div>
+      <div class="plan-price">1 690<span> €</span></div>
+      <div class="plan-from">One-shot · HT</div>
+      <ul class="plan-features">
+        <li>Scène 3D luxe sur-mesure</li>
+        <li>16 variants de personnalisation</li>
+        <li>Transitions animées entre variants</li>
+        <li>AR mobile inclus</li>
+        <li>Révisions incluses</li>
+      </ul>
+      <div style="padding: 16px 0; border-top: 1px solid var(--brd); font-size: 12px; color: var(--txt3); display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;">
+        <span style="letter-spacing:.1em; text-transform:uppercase; font-size:10px;">Maintenance</span>
+        <span style="color: var(--txt2);">79 € <span style="color:var(--txt3)">/mois</span></span>
+      </div>
+      <a href="#contact" class="plan-cta primary">Démarrer maintenant</a>
+    </div>
+  </div>
+</section>
 
-  <script type="module">
-    import { VctrModelApi } from "https://app.vectary.com/studio-lite/scripts/api.js";
 
-    // --- Config à garder synchro avec les noms réels dans Studio -----------
-    const METALS = [
-      { name: "Or",       color: "#d9b44a" },
-      { name: "Or Blanc", color: "#e3e3e3" },
-      { name: "Or Rose",  color: "#e5b19e" },
-    ];
-    const STONES = [
-      { name: "Diamond",  color: "#eef0f7" },
-      { name: "Sapphire", color: "#1f3f9e" },
-      { name: "Ruby",     color: "#8f1d2e" },
-      { name: "Emerald",  color: "#1e6b3f" },
-    ];
-    const VARIANT = "Pierres Variantes";        // renomme ici si tu as renommé le container
-    let FORMES = ["Corolle", "Pétale"];         // objets du switcher ; DOIT matcher EXACTEMENT le nom dans Studio (accent compris)
-    const TEXT_OBJECT = "3D Text";              // nom de l'objet Texte 3D pour la gravure
-    // -----------------------------------------------------------------------
 
-    const METAL_NAMES = METALS.map(m => m.name);
-    const STONE_NAMES = STONES.map(s => s.name);
+<!-- ── CTA ── -->
+<section id="cta">
+  <h2 class="reveal"><em>Prêt</em> à transformer<br>votre boutique ?</h2>
+  <p class="reveal d1">Un brief, une démo, un devis. Réponse sous 24h.</p>
+  <div class="cta-row reveal d2">
+    <a href="#contact" class="btn-primary">Démarrer un projet</a>
+    <a href="mailto:contact@delphinium.pro" class="cta-email">contact@delphinium.pro</a>
+  </div>
+</section>
 
-    const statusEl     = document.getElementById("status");
-    const readoutEl    = document.getElementById("readout");
-    const viewerFrame   = document.getElementById("viewerFrame");
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+<!-- ── CONTACT ── -->
+<section id="contact" class="section">
+  <div class="contact-grid">
+    <div class="contact-left">
+      <p class="section-label reveal">Contact</p>
+      <h2 class="reveal d1">Parlons de<br>votre <em>projet</em></h2>
+      <p class="reveal d2">Décrivez votre boutique, vos produits, vos objectifs. Nous vous répondons avec une proposition adaptée sous 24 heures.</p>
+      <div class="contact-detail reveal d3">
+        <div class="contact-detail-label">Email</div>
+        <div class="contact-detail-val">contact@delphinium.pro</div>
+      </div>
+      <div class="contact-detail reveal d4">
+        <div class="contact-detail-label">Localisation</div>
+        <div class="contact-detail-val">Paris, France</div>
+      </div>
+    </div>
+    <form class="reveal d1" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="merci.html">
+      <input type="hidden" name="form-name" value="contact">
+      <p hidden>
+        <label>Ne pas remplir : <input name="bot-field"></label>
+      </p>
+      <div class="form-row">
+        <div class="field">
+          <label>Prénom</label>
+          <input type="text" name="prenom" placeholder="Alexandre" required>
+        </div>
+        <div class="field">
+          <label>Société</label>
+          <input type="text" name="societe" placeholder="Maison Rivière">
+        </div>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="alexandre@maison.fr" required>
+      </div>
+      <div class="field">
+        <label>Plateforme e-commerce</label>
+        <select name="plateforme">
+          <option value="" disabled selected>Shopify, WooCommerce, autre…</option>
+          <option>Shopify</option>
+          <option>WooCommerce</option>
+          <option>PrestaShop</option>
+          <option>Sur-mesure</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Votre projet</label>
+        <textarea name="projet" placeholder="Décrivez vos produits, besoins, objectifs…" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">
+        Envoyer le message
+      </button>
+    </form>
+  </div>
+</section>
 
-    const api = new VctrModelApi("vectary_embed");
-    window.api = api;
-    await api.init();
-    statusEl.textContent = "Prêt.";
+<!-- ── FOOTER ── -->
+<footer>
+  <a href="#" class="footer-logo">
+    <img src="logo.png" alt="Delphinium" style="height:26px;width:auto;display:block;">
+    <div>
+      <div class="footer-logo-name">Delphinium</div>
+      <div class="footer-logo-sub">Interactive</div>
+    </div>
+  </a>
+  <div class="footer-links">
+    <a href="#demo">Démo</a>
+    <a href="#services">Services</a>
+    <a href="#process">Méthode</a>
+    <a href="#pricing">Tarifs</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <span class="footer-copy">© 2026 Delphinium Interactive · Paris</span>
+</footer>
 
-    function stripIds(c) {
-      const x = { ...c };
-      delete x.active_material_instanceId; delete x.object_instanceId;
-      delete x.active_object_instanceId;   delete x.variant_instanceId;
-      return x;
-    }
+<!-- ── SCRIPTS ── -->
+<script>
+(function () {
 
-    // Petit flourish visuel autour du viewer à chaque changement de config
-    function pulseViewer() {
-      if (reduceMotion) return;
-      viewerFrame.classList.add("pulse");
-      setTimeout(() => viewerFrame.classList.remove("pulse"), 700);
-    }
+  // ── Cursor ──
+  var cur = document.getElementById('cur');
+  document.addEventListener('mousemove', function(e) {
+    cur.style.left = e.clientX + 'px';
+    cur.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .service-card, .plan, .testi-card').forEach(function(el) {
+    el.addEventListener('mouseenter', function() { document.body.classList.add('hovering'); });
+    el.addEventListener('mouseleave', function() { document.body.classList.remove('hovering'); });
+  });
 
-    async function setMaterial(fromNames, newMat) {
-      const cfg = await api.getConfigurationState();
-      const next = cfg
-        .filter(c => "active_material" in c && fromNames.includes(c.active_material) && c.active_material !== newMat)
-        .map(c => ({ ...stripIds(c), active_material: newMat }));
-      if (next.length) await api.setConfigurationState(next);
-      await refresh();
-      pulseViewer();
-    }
+  // ── Nav scroll ──
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
 
-    async function setShape(objName) {
-      const cfg = await api.getConfigurationState();
-      const next = cfg
-        .filter(c => "active_object" in c && c.variant === VARIANT && c.active_object !== objName)
-        .map(c => ({ ...stripIds(c), active_object: objName }));
-      if (next.length) { await api.setConfigurationState(next); await refresh(); pulseViewer(); }
-      else statusEl.textContent = `${objName} : aucune forme portant ce nom dans le switcher.`;
-    }
-
-    // --- Gravure : écrit directement dans l'objet Texte 3D -----------------
-    async function setEngraving(text) {
-      try {
-        await api.setText3d(TEXT_OBJECT, { text });
-        statusEl.textContent = text ? `Gravure : ${text}` : "Gravure effacée.";
-      } catch (e) {
-        statusEl.textContent = `Objet texte ${TEXT_OBJECT} introuvable — vérifie le nom dans Studio.`;
+  // ── Reveal on scroll ──
+  var revealEls = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
       }
-    }
-    function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
-
-    // --- Contrôles ---------------------------------------------------------
-    function chip(container, label, color, onClick) {
-      const el = document.createElement("div");
-      el.className = "chip"; el.dataset.name = label; el.tabIndex = 0;
-      el.innerHTML = `<span class="dot" style="background:${color}"></span>${label}`;
-      const run = () => { statusEl.textContent = `→ ${label}…`; onClick(); };
-      el.addEventListener("click", run);
-      el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); run(); } });
-      container.appendChild(el);
-      return el;
-    }
-
-    const metalsBox = document.getElementById("metals");
-    const stonesBox = document.getElementById("stones");
-    const shapesBox = document.getElementById("shapes");
-
-    METALS.forEach(m => chip(metalsBox, m.name, m.color, () => setMaterial(METAL_NAMES, m.name)));
-    STONES.forEach(s => chip(stonesBox, s.name, s.color, () => setMaterial(STONE_NAMES, s.name)));
-    function renderShapes() {
-      shapesBox.innerHTML = "";
-      FORMES.forEach(f => chip(shapesBox, f, "#cfc8bb", () => setShape(f)));
-    }
-    renderShapes();
-
-    const engraveInput = document.getElementById("engrave");
-    const countEl = document.getElementById("count");
-    engraveInput.addEventListener("input", (e) => {
-      countEl.textContent = e.target.value.length;
-      countEl.parentElement.classList.toggle("max", e.target.value.length >= 20);
     });
-    engraveInput.addEventListener("input", debounce((e) => setEngraving(e.target.value), 250));
+  }, { threshold: 0.1 });
+  revealEls.forEach(function(el) { observer.observe(el); });
 
-    async function refresh() {
-      const cfg = await api.getConfigurationState();
-      let metal = null, stone = null, shape = null;
-      for (const c of cfg) {
-        if ("active_material" in c && METAL_NAMES.includes(c.active_material)) metal = c.active_material;
-        if ("active_material" in c && STONE_NAMES.includes(c.active_material)) stone = c.active_material;
-        if ("active_object" in c && c.variant === VARIANT) shape = c.active_object;
+  // ── Hero background canvas : floating particles + subtle lines ──
+  var hc = document.getElementById('hero-canvas-bg');
+  if (hc) {
+    var hCtx = hc.getContext('2d');
+    var hW = 0, hH = 0, hT = 0;
+    var particles = [];
+
+    function resizeHero() {
+      hW = hc.width  = window.innerWidth;
+      hH = hc.height = window.innerHeight;
+      // reinit particles on resize
+      particles = [];
+      for (var i = 0; i < 60; i++) {
+        particles.push({
+          x: Math.random() * hW,
+          y: Math.random() * hH,
+          vx: (Math.random() - .5) * .25,
+          vy: (Math.random() - .5) * .25,
+          r: Math.random() * 1.5 + .5,
+          a: Math.random() * .4 + .1
+        });
       }
-      const mark = (box, val) => box.querySelectorAll(".chip")
-        .forEach(ch => ch.classList.toggle("active", ch.dataset.name === val));
-      mark(metalsBox, metal); mark(stonesBox, stone); mark(shapesBox, shape);
-      readoutEl.innerHTML =
-        `<b>Métal</b> : ${metal ?? "—"}<br><b>Pierre</b> : ${stone ?? "—"}<br><b>Forme</b> : ${shape ?? "—"}`;
-      statusEl.textContent = "Prêt.";
     }
+    resizeHero();
+    window.addEventListener('resize', resizeHero);
 
-    try { await api.addEventListener("configurator_state_change", () => refresh()); } catch (e) {}
-    await refresh();
-  </script>
+    function drawHero() {
+      hCtx.clearRect(0, 0, hW, hH);
+
+      // move + wrap
+      particles.forEach(function(p) {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = hW; if (p.x > hW) p.x = 0;
+        if (p.y < 0) p.y = hH; if (p.y > hH) p.y = 0;
+      });
+
+      // connections
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = i + 1; j < particles.length; j++) {
+          var dx = particles[i].x - particles[j].x;
+          var dy = particles[i].y - particles[j].y;
+          var d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 130) {
+            hCtx.beginPath();
+            hCtx.moveTo(particles[i].x, particles[i].y);
+            hCtx.lineTo(particles[j].x, particles[j].y);
+            hCtx.strokeStyle = 'rgba(107,92,231,' + (.06 * (1 - d/130)) + ')';
+            hCtx.lineWidth = .5;
+            hCtx.stroke();
+          }
+        }
+      }
+
+      // dots
+      particles.forEach(function(p) {
+        hCtx.beginPath();
+        hCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        hCtx.fillStyle = 'rgba(107,92,231,' + p.a + ')';
+        hCtx.fill();
+      });
+
+      requestAnimationFrame(drawHero);
+    }
+    drawHero();
+  }
+
+  // ── Process canvas : concentric rings ──
+  var pc = document.getElementById('proc-canvas');
+  if (pc) {
+    var pCtx = pc.getContext('2d');
+    var pW = 0, pT = 0;
+    var pH = 340;
+
+    function resizeProc() {
+      var rect = pc.parentElement.getBoundingClientRect();
+      pW = pc.width = rect.width;
+      pc.height = pH;
+    }
+    setTimeout(resizeProc, 80);
+    window.addEventListener('resize', resizeProc);
+
+    function drawProc() {
+      if (!pW) { requestAnimationFrame(drawProc); return; }
+      pCtx.clearRect(0, 0, pW, pH);
+      var cx = pW / 2, cy = pH / 2;
+      var maxR = Math.min(pW, pH) * 0.38;
+
+      for (var i = 0; i < 4; i++) {
+        var r = maxR * ((i + 1) / 4);
+        pCtx.beginPath();
+        pCtx.arc(cx, cy, r, 0, Math.PI * 2);
+        pCtx.strokeStyle = 'rgba(107,92,231,' + (0.05 + i * 0.04) + ')';
+        pCtx.lineWidth = 0.8;
+        pCtx.stroke();
+
+        var angle = pT * (1 - i * 0.18);
+        pCtx.beginPath();
+        pCtx.arc(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r, i === 0 ? 3 : 2, 0, Math.PI * 2);
+        pCtx.fillStyle = i === 0 ? 'rgba(200,169,110,.85)' : 'rgba(107,92,231,.45)';
+        pCtx.fill();
+      }
+
+      // crosshair
+      pCtx.strokeStyle = 'rgba(107,92,231,.06)';
+      pCtx.lineWidth = 0.5;
+      pCtx.beginPath(); pCtx.moveTo(cx, cy - maxR - 8); pCtx.lineTo(cx, cy + maxR + 8); pCtx.stroke();
+      pCtx.beginPath(); pCtx.moveTo(cx - maxR - 8, cy); pCtx.lineTo(cx + maxR + 8, cy); pCtx.stroke();
+
+      pT += 0.007;
+      requestAnimationFrame(drawProc);
+    }
+    drawProc();
+  }
+
+})();
+</script>
 </body>
 </html>
