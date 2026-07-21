@@ -410,6 +410,148 @@ h2 em { font-style: italic; color: var(--vl); }
   color: var(--txt3);
 }
 
+/* e-commerce product card */
+.demo-right:has(.bague-card) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 48px;
+}
+.bague-card {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg2);
+  border: 1px solid var(--brd);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .3s ease, transform .4s ease, box-shadow .4s ease;
+}
+.bague-card:hover {
+  border-color: var(--brdh);
+  transform: translateY(-5px);
+  box-shadow: 0 24px 60px -30px rgba(0,0,0,.8);
+}
+.bague-card-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: radial-gradient(120% 100% at 50% 28%, #1a1a32 0%, #0b0b18 74%);
+}
+.bague-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(.2,.6,.2,1);
+}
+.bague-card:hover .bague-card-media img { transform: scale(1.06); }
+.bague-card-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .6s cubic-bezier(.2,.6,.2,1);
+}
+.bague-card:hover .bague-card-fallback { transform: scale(1.06); }
+.bague-card-fallback .ring {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 15px solid var(--gold);
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.08) inset;
+}
+.bague-card-fallback .ring::before {
+  content: '';
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--vl);
+  box-shadow: 0 0 20px 3px rgba(169,156,245,.5);
+}
+.bague-card-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  background: rgba(7,7,15,.72);
+  border: 1px solid var(--brd);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--txt2);
+}
+.bague-card-hover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 26px 16px 16px;
+  text-align: center;
+  background: linear-gradient(to top, rgba(7,7,15,.92) 0%, rgba(7,7,15,0) 100%);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--goldl);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.bague-card:hover .bague-card-hover { opacity: 1; transform: translateY(0); }
+.bague-card-info { padding: 22px 24px 26px; }
+.bague-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.bague-card-head h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--txt);
+}
+.bague-card-price {
+  font-size: 13px;
+  letter-spacing: .04em;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.bague-card-info p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--txt3);
+  margin-bottom: 18px;
+}
+.bague-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--txt2);
+  transition: color .25s ease;
+}
+.bague-card-cta i {
+  font-style: normal;
+  transition: transform .25s ease;
+}
+.bague-card:hover .bague-card-cta { color: var(--gold); }
+.bague-card:hover .bague-card-cta i { transform: translateX(4px); }
+
 /* ===== SERVICES ===== */
 .services-intro {
   display: grid;
@@ -828,6 +970,7 @@ footer {
   .demo-right iframe {
     height: 420px;
   }
+  .demo-right:has(.bague-card) { padding: 40px 24px; }
 
   /* ── SERVICES ── */
   .services-intro {
@@ -1093,18 +1236,22 @@ footer {
     </div>
 
     <div class="demo-right">
-      <iframe
-        src="https://app.vectary.com/p/2dxVUjSHsSVZm3tRrjS6aa"
-        frameborder="0"
-        allow="autoplay; xr-spatial-tracking"
-        allowfullscreen
-        title="Configurateur bague bijou — Delphinium"
-        style="width:100%; height:780px; border:none; display:block;"
-      ></iframe>
-      <div class="demo-badge">
-        <div class="live-dot"></div>
-        <span>Configurateur live · Pro</span>
-      </div>
+      <a href="bague/index.html" class="bague-card reveal" aria-label="Configurer la bague en 3D — voir le produit">
+        <div class="bague-card-media">
+          <div class="bague-card-fallback" aria-hidden="true"><span class="ring"></span></div>
+          <img src="bague/assets/bague-produit.jpg" alt="Bague or & pierre précieuse — Delphinium" loading="lazy" onerror="this.style.display='none'">
+          <span class="bague-card-badge"><span class="live-dot"></span>Configurable 3D</span>
+          <span class="bague-card-hover">Configurer en 3D →</span>
+        </div>
+        <div class="bague-card-info">
+          <div class="bague-card-head">
+            <h3>Bague signature</h3>
+            <span class="bague-card-price">1 290 – 1 690 €</span>
+          </div>
+          <p>Or jaune, blanc ou rosé · diamant, saphir, émeraude · gravure incluse</p>
+          <span class="bague-card-cta">Personnaliser en 3D <i>→</i></span>
+        </div>
+      </a>
     </div>
 
   </div>
@@ -1215,7 +1362,7 @@ footer {
   <p class="reveal d1">Un brief, une démo, un devis. Réponse sous 24h.</p>
   <div class="cta-row reveal d2">
     <a href="#contact" class="btn-primary">Démarrer un projet</a>
-    <a href="mailto:contact@delphinium.fr" class="cta-email">contact@delphinium.pro</a>
+    <a href="mailto:contact@delphinium.pro" class="cta-email">contact@delphinium.pro</a>
   </div>
 </section>
 
@@ -1235,24 +1382,28 @@ footer {
         <div class="contact-detail-val">Paris, France</div>
       </div>
     </div>
-    <div class="reveal d1">
+    <form class="reveal d1" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="merci.html">
+      <input type="hidden" name="form-name" value="contact">
+      <p hidden>
+        <label>Ne pas remplir : <input name="bot-field"></label>
+      </p>
       <div class="form-row">
         <div class="field">
           <label>Prénom</label>
-          <input type="text" placeholder="Alexandre">
+          <input type="text" name="prenom" placeholder="Alexandre" required>
         </div>
         <div class="field">
           <label>Société</label>
-          <input type="text" placeholder="Maison Rivière">
+          <input type="text" name="societe" placeholder="Maison Rivière">
         </div>
       </div>
       <div class="field">
         <label>Email</label>
-        <input type="email" placeholder="alexandre@maison.fr">
+        <input type="email" name="email" placeholder="alexandre@maison.fr" required>
       </div>
       <div class="field">
         <label>Plateforme e-commerce</label>
-        <select>
+        <select name="plateforme">
           <option value="" disabled selected>Shopify, WooCommerce, autre…</option>
           <option>Shopify</option>
           <option>WooCommerce</option>
@@ -1263,12 +1414,12 @@ footer {
       </div>
       <div class="field">
         <label>Votre projet</label>
-        <textarea placeholder="Décrivez vos produits, besoins, objectifs…"></textarea>
+        <textarea name="projet" placeholder="Décrivez vos produits, besoins, objectifs…" required></textarea>
       </div>
-      <button class="submit-btn" onclick="this.textContent='Message envoyé ✓';this.style.background='#4ade80';this.style.color='#07070f';this.disabled=true">
+      <button type="submit" class="submit-btn">
         Envoyer le message
       </button>
-    </div>
+    </form>
   </div>
 </section>
 

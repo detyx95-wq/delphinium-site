@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Merci — Delphinium Interactive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg:      #07070f;
+  --brd:     rgba(255,255,255,.08);
+  --violet:  #6b5ce7;
+  --vl:      #a99cf5;
+  --gold:    #c8a96e;
+  --goldl:   #dfc98e;
+  --txt:     #eeeeff;
+  --txt2:    rgba(238,238,255,.52);
+  --txt3:    rgba(238,238,255,.28);
+}
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  overflow: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -55%);
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(107,92,231,.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.merci-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,169,110,.4);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+  font-size: 26px;
+  margin-bottom: 36px;
+  position: relative;
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  position: relative;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 24px;
+  position: relative;
+}
+h1 em { font-style: italic; color: var(--vl); }
+p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--txt2);
+  max-width: 460px;
+  margin: 0 auto 44px;
+  position: relative;
+}
+.back {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--bg);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  text-decoration: none;
+  transition: background .25s;
+  position: relative;
+}
+.back:hover { background: var(--goldl); }
+.contact-line {
+  margin-top: 28px;
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: var(--txt3);
+  position: relative;
+}
+.contact-line a { color: var(--gold); text-decoration: none; }
+</style>
+</head>
+<body>
+  <div class="merci-icon">✓</div>
+  <p class="eyebrow">Message bien reçu</p>
+  <h1>Merci pour<br>votre <em>message</em></h1>
+  <p>Nous avons bien reçu votre demande. Notre équipe vous répond avec une proposition adaptée sous 24&nbsp;heures.</p>
+  <a href="index.html" class="back">Retour à l'accueil</a>
+  <div class="contact-line">Une question urgente ? <a href="mailto:contact@delphinium.pro">contact@delphinium.pro</a></div>
+</body>
+</html>
