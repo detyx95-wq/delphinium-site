@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Configurateur bague Delphinium — chaton fleur, métal, pierre et gravure personnalisables en temps réel.">
+  <title>Configurateur — bague · Delphinium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#07070f; --bg2:#0d0d1e;
+      --sur:rgba(255,255,255,.028);
+      --brd:rgba(255,255,255,.08); --brdh:rgba(255,255,255,.15);
+      --violet:#6b5ce7; --v1:#a99cf5;
+      --gold:#c8a96e; --gold1:#dfc98e;
+      --txt:#eeeeff; --txt2:rgba(238,238,255,.52); --txt3:rgba(238,238,255,.28);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin:0; font-family:'Inter',system-ui,-apple-system,sans-serif; font-weight:300;
+      background:var(--bg); color:var(--txt);
+      background-image:radial-gradient(1200px 500px at 78% -8%, rgba(107,92,231,.10), transparent 60%),
+                        radial-gradient(900px 500px at -5% 110%, rgba(200,169,110,.06), transparent 55%);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:22px 40px; border-bottom:1px solid var(--brd);
+    }
+    .back-link {
+      display:flex; align-items:center; gap:8px;
+      font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+      color:var(--txt3); text-decoration:none; transition:color .25s;
+    }
+    .back-link:hover { color:var(--txt2); }
+    .back-link::before { content:'←'; }
+    .brand-mark { display:flex; flex-direction:column; align-items:flex-end; gap:1px; }
+    .brand-mark-name {
+      font-family:'Playfair Display',serif; font-size:15px; letter-spacing:.06em; color:#ddd5f7;
+    }
+    .brand-mark-sub {
+      font-size:8px; letter-spacing:.36em; text-transform:uppercase; color:var(--gold);
+    }
+
+    /* ── HERO / TITRE ── */
+    .hero {
+      max-width:1200px; margin:0 auto; padding:56px 40px 8px; text-align:center;
+    }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:12px;
+      font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:var(--gold);
+      margin-bottom:18px;
+    }
+    .eyebrow::before, .eyebrow::after { content:''; width:22px; height:1px; background:var(--gold); }
+    .hero h1 {
+      font-family:'Playfair Display',serif; font-weight:400; font-size:clamp(32px,4vw,48px);
+      line-height:1.12; letter-spacing:-.01em; margin:0 0 14px;
+    }
+    .hero h1 em { font-style:italic; color:var(--v1); }
+    .hero p {
+      max-width:480px; margin:0 auto; font-size:14px; line-height:1.8; color:var(--txt2);
+    }
+
+    /* ── DIVIDER FLORAL (signature) ── */
+    .floral-divider {
+      width:100%; max-width:760px; margin:34px auto 8px; display:block;
+      opacity:.85; filter:drop-shadow(0 0 14px rgba(107,92,231,.15));
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .floral-divider picture source { display:none; }
+    }
+
+    /* ── LAYOUT CONFIGURATEUR ── */
+    .wrap {
+      display:flex; flex-wrap:wrap; gap:22px;
+      padding:28px 40px 90px; max-width:1200px; margin:0 auto;
+    }
+    .viewer { flex:1 1 460px; }
+    .viewer-frame {
+      position:relative; border-radius:14px; border:1px solid var(--brd);
+      background:var(--bg2); overflow:hidden;
+      transition:border-color .5s, box-shadow .5s;
+    }
+    .viewer-frame.pulse {
+      border-color:rgba(200,169,110,.5);
+      box-shadow:0 0 0 1px rgba(200,169,110,.15), 0 0 32px rgba(200,169,110,.12);
+    }
+    iframe { width:100%; height:670px; border:0; display:block; }
+    .panel { flex:1 1 320px; }
+
+    .status { font-size:13px; color:var(--txt2); margin:0 0 22px; min-height:18px; }
+
+    .group {
+      background:var(--bg2); border:1px solid var(--brd); border-radius:14px;
+      padding:18px; margin-bottom:16px;
+    }
+    .group h2 {
+      font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--gold);
+      font-weight:600; margin:0 0 14px;
+    }
+
+    .chips { display:flex; flex-wrap:wrap; gap:10px; }
+    .chip {
+      display:flex; align-items:center; gap:8px; padding:7px 13px 7px 8px;
+      border:1.5px solid var(--brd); border-radius:999px; background:var(--sur);
+      color:var(--txt); cursor:pointer; font-size:14px;
+      transition:border-color .18s, background .18s, color .18s, transform .18s;
+    }
+    .chip:hover { border-color:var(--brdh); background:rgba(255,255,255,.05); }
+    .chip.active {
+      border-color:var(--gold); background:rgba(200,169,110,.14); color:var(--gold1);
+      animation:bloom .45s ease-out;
+    }
+    .chip:focus-visible { outline:2px solid var(--gold1); outline-offset:2px; }
+    .dot { width:20px; height:20px; border-radius:50%; border:1px solid rgba(255,255,255,.18); flex:none; }
+
+    @keyframes bloom {
+      0%   { transform:scale(1); }
+      45%  { transform:scale(1.06); }
+      100% { transform:scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .chip.active { animation:none; }
+      .viewer-frame { transition:none; }
+    }
+
+    .engrave { display:flex; flex-direction:column; gap:6px; }
+    .engrave input {
+      padding:11px 13px; border:1.5px solid var(--brd); border-radius:10px;
+      background:var(--bg); color:var(--txt); font:inherit;
+    }
+    .engrave input::placeholder { color:var(--txt3); }
+    .engrave input:focus {
+      outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,169,110,.15);
+    }
+    .counter { font-size:12px; color:var(--txt3); text-align:right; }
+    .counter.max { color:var(--gold1); }
+    .hint { font-size:12px; color:var(--txt2); margin-top:10px; line-height:1.5; }
+    code { background:rgba(255,255,255,.06); color:var(--gold1); padding:1px 5px; border-radius:4px; font-size:12px; }
+
+    .readout { font-size:13px; color:var(--txt); line-height:1.9; }
+    .readout b { color:var(--txt2); font-weight:600; }
+    .readout span { transition:opacity .3s; }
+    .readout span.swap { opacity:0; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding:30px 40px; border-top:1px solid var(--brd);
+      display:flex; align-items:center; justify-content:space-between;
+      font-size:11px; color:var(--txt3);
+    }
+    footer a { color:var(--txt3); text-decoration:none; transition:color .25s; }
+    footer a:hover { color:var(--txt2); }
+
+    @media (max-width:768px) {
+      header { padding:18px 20px; }
+      .hero { padding:40px 20px 4px; }
+      .wrap { padding:20px 20px 60px; }
+      footer { padding:24px 20px; flex-direction:column; gap:12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="back-link">Retour au site</a>
+    <div class="brand-mark">
+      <span class="brand-mark-name">Delphinium</span>
+      <span class="brand-mark-sub">Interactive</span>
+    </div>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Collection fleur</p>
+    <h1>Configurez votre <em>bague</em></h1>
+    <p>Métal, pierre et forme du chaton en temps réel — puis gravez l'intérieur de l'anneau à votre message.</p>
+  </div>
+
+  <picture>
+    <source srcset="assets/liseres-fleur.gif" media="(prefers-reduced-motion: no-preference)">
+    <img class="floral-divider" src="assets/liseres-fleur.png" alt="" role="presentation">
+  </picture>
+
+  <div class="wrap">
+    <div class="viewer">
+      <div class="viewer-frame" id="viewerFrame">
+        <iframe id="vectary_embed"
+                src="https://app.vectary.com/p/3XBDSWLuqFpKqLr93wCTsp"
+                allow="xr-spatial-tracking; fullscreen;"
+                title="Configurateur 3D — bague Delphinium"></iframe>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p class="status" id="status">Initialisation…</p>
+
+      <div class="group">
+        <h2>Métal</h2>
+        <div class="chips" id="metals"></div>
+      </div>
+
+      <div class="group">
+        <h2>Pierre</h2>
+        <div class="chips" id="stones"></div>
+      </div>
+
+      <div class="group">
+        <h2>Forme</h2>
+        <div class="chips" id="shapes"></div>
+      </div>
+
+      <div class="group">
+        <h2>Gravure</h2>
+        <div class="engrave">
+          <input id="engrave" maxlength="20" placeholder="ex : S + R — 09.2021" autocomplete="off">
+          <div class="counter"><span id="count">0</span>/20</div>
+        </div>
+        <p class="hint">Écrit en direct dans l'objet Texte 3D <code>3D Text</code> de la scène.
+        Si rien ne bouge, vérifie le nom de l'objet dans Studio et reporte-le dans <code>TEXT_OBJECT</code>.</p>
+      </div>
+
+      <div class="group">
+        <h2>État actuel</h2>
+        <div class="readout" id="readout">—</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Delphinium Interactive · Paris</span>
+    <a href="/#contact">Un projet similaire ? Contactez-nous</a>
+  </footer>
+
+  <script type="module">
+    import { VctrModelApi } from "https://app.vectary.com/studio-lite/scripts/api.js";
+
+    // --- Config à garder synchro avec les noms réels dans Studio -----------
+    const METALS = [
+      { name: "Or",       color: "#d9b44a" },
+      { name: "Or Blanc", color: "#e3e3e3" },
+      { name: "Or Rose",  color: "#e5b19e" },
+    ];
+    const STONES = [
+      { name: "Diamond",  color: "#eef0f7" },
+      { name: "Sapphire", color: "#1f3f9e" },
+      { name: "Ruby",     color: "#8f1d2e" },
+      { name: "Emerald",  color: "#1e6b3f" },
+    ];
+    const VARIANT = "Pierres Variantes";        // renomme ici si tu as renommé le container
+    let FORMES = ["Corolle", "Pétale"];         // objets du switcher ; DOIT matcher EXACTEMENT le nom dans Studio (accent compris)
+    const TEXT_OBJECT = "3D Text";              // nom de l'objet Texte 3D pour la gravure
+    // -----------------------------------------------------------------------
+
+    const METAL_NAMES = METALS.map(m => m.name);
+    const STONE_NAMES = STONES.map(s => s.name);
+
+    const statusEl     = document.getElementById("status");
+    const readoutEl    = document.getElementById("readout");
+    const viewerFrame   = document.getElementById("viewerFrame");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const api = new VctrModelApi("vectary_embed");
+    window.api = api;
+    await api.init();
+    statusEl.textContent = "Prêt.";
+
+    function stripIds(c) {
+      const x = { ...c };
+      delete x.active_material_instanceId; delete x.object_instanceId;
+      delete x.active_object_instanceId;   delete x.variant_instanceId;
+      return x;
+    }
+
+    // Petit flourish visuel autour du viewer à chaque changement de config
+    function pulseViewer() {
+      if (reduceMotion) return;
+      viewerFrame.classList.add("pulse");
+      setTimeout(() => viewerFrame.classList.remove("pulse"), 700);
+    }
+
+    async function setMaterial(fromNames, newMat) {
+      const cfg = await api.getConfigurationState();
+      const next = cfg
+        .filter(c => "active_material" in c && fromNames.includes(c.active_material) && c.active_material !== newMat)
+        .map(c => ({ ...stripIds(c), active_material: newMat }));
+      if (next.length) await api.setConfigurationState(next);
+      await refresh();
+      pulseViewer();
+    }
+
+    async function setShape(objName) {
+      const cfg = await api.getConfigurationState();
+      const next = cfg
+        .filter(c => "active_object" in c && c.variant === VARIANT && c.active_object !== objName)
+        .map(c => ({ ...stripIds(c), active_object: objName }));
+      if (next.length) { await api.setConfigurationState(next); await refresh(); pulseViewer(); }
+      else statusEl.textContent = `${objName} : aucune forme portant ce nom dans le switcher.`;
+    }
+
+    // --- Gravure : écrit directement dans l'objet Texte 3D -----------------
+    async function setEngraving(text) {
+      try {
+        await api.setText3d(TEXT_OBJECT, { text });
+        statusEl.textContent = text ? `Gravure : ${text}` : "Gravure effacée.";
+      } catch (e) {
+        statusEl.textContent = `Objet texte ${TEXT_OBJECT} introuvable — vérifie le nom dans Studio.`;
+      }
+    }
+    function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+
+    // --- Contrôles ---------------------------------------------------------
+    function chip(container, label, color, onClick) {
+      const el = document.createElement("div");
+      el.className = "chip"; el.dataset.name = label; el.tabIndex = 0;
+      el.innerHTML = `<span class="dot" style="background:${color}"></span>${label}`;
+      const run = () => { statusEl.textContent = `→ ${label}…`; onClick(); };
+      el.addEventListener("click", run);
+      el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); run(); } });
+      container.appendChild(el);
+      return el;
+    }
+
+    const metalsBox = document.getElementById("metals");
+    const stonesBox = document.getElementById("stones");
+    const shapesBox = document.getElementById("shapes");
+
+    METALS.forEach(m => chip(metalsBox, m.name, m.color, () => setMaterial(METAL_NAMES, m.name)));
+    STONES.forEach(s => chip(stonesBox, s.name, s.color, () => setMaterial(STONE_NAMES, s.name)));
+    function renderShapes() {
+      shapesBox.innerHTML = "";
+      FORMES.forEach(f => chip(shapesBox, f, "#cfc8bb", () => setShape(f)));
+    }
+    renderShapes();
+
+    const engraveInput = document.getElementById("engrave");
+    const countEl = document.getElementById("count");
+    engraveInput.addEventListener("input", (e) => {
+      countEl.textContent = e.target.value.length;
+      countEl.parentElement.classList.toggle("max", e.target.value.length >= 20);
+    });
+    engraveInput.addEventListener("input", debounce((e) => setEngraving(e.target.value), 250));
+
+    async function refresh() {
+      const cfg = await api.getConfigurationState();
+      let metal = null, stone = null, shape = null;
+      for (const c of cfg) {
+        if ("active_material" in c && METAL_NAMES.includes(c.active_material)) metal = c.active_material;
+        if ("active_material" in c && STONE_NAMES.includes(c.active_material)) stone = c.active_material;
+        if ("active_object" in c && c.variant === VARIANT) shape = c.active_object;
+      }
+      const mark = (box, val) => box.querySelectorAll(".chip")
+        .forEach(ch => ch.classList.toggle("active", ch.dataset.name === val));
+      mark(metalsBox, metal); mark(stonesBox, stone); mark(shapesBox, shape);
+      readoutEl.innerHTML =
+        `<b>Métal</b> : ${metal ?? "—"}<br><b>Pierre</b> : ${stone ?? "—"}<br><b>Forme</b> : ${shape ?? "—"}`;
+      statusEl.textContent = "Prêt.";
+    }
+
+    try { await api.addEventListener("configurator_state_change", () => refresh()); } catch (e) {}
+    await refresh();
+  </script>
+</body>
+</html>
