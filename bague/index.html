@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Configurateur bague Delphinium — chaton fleur, métal, pierre et gravure personnalisables en temps réel.">
-  <title>Configurateur — bague · Delphinium</title>
+  <title>Bague sur mesure — Collection fleur · Delphinium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
       --violet:#6b5ce7; --v1:#a99cf5;
       --gold:#c8a96e; --gold1:#dfc98e;
       --txt:#eeeeff; --txt2:rgba(238,238,255,.52); --txt3:rgba(238,238,255,.28);
+      --card1:#161630; --card2:#121226; --cardbrd:#26264a;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -47,38 +48,19 @@
       font-size:8px; letter-spacing:.36em; text-transform:uppercase; color:var(--gold);
     }
 
-    /* ── HERO / TITRE ── */
-    .hero {
-      max-width:1200px; margin:0 auto; padding:56px 40px 8px; text-align:center;
-    }
-    .eyebrow {
-      display:inline-flex; align-items:center; gap:12px;
-      font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:var(--gold);
-      margin-bottom:18px;
-    }
-    .eyebrow::before, .eyebrow::after { content:''; width:22px; height:1px; background:var(--gold); }
-    .hero h1 {
-      font-family:'Playfair Display',serif; font-weight:400; font-size:clamp(32px,4vw,48px);
-      line-height:1.12; letter-spacing:-.01em; margin:0 0 14px;
-    }
-    .hero h1 em { font-style:italic; color:var(--v1); }
-    .hero p {
-      max-width:480px; margin:0 auto; font-size:14px; line-height:1.8; color:var(--txt2);
-    }
-
     /* ── DIVIDER FLORAL (signature) ── */
     .floral-divider {
-      width:100%; max-width:760px; margin:34px auto 8px; display:block;
-      opacity:.85; filter:drop-shadow(0 0 14px rgba(107,92,231,.15));
+      width:100%; max-width:620px; margin:30px auto 0; display:block;
+      opacity:.7; filter:drop-shadow(0 0 14px rgba(107,92,231,.15));
     }
     @media (prefers-reduced-motion: reduce) {
-      .floral-divider picture source { display:none; }
+      picture source { display:none; }
     }
 
     /* ── LAYOUT CONFIGURATEUR ── */
     .wrap {
-      display:flex; flex-wrap:wrap; gap:22px;
-      padding:28px 40px 90px; max-width:1200px; margin:0 auto;
+      display:flex; flex-wrap:wrap; gap:28px;
+      padding:34px 40px 90px; max-width:1200px; margin:0 auto;
     }
     .viewer { flex:1 1 460px; }
     .viewer-frame {
@@ -91,62 +73,145 @@
       box-shadow:0 0 0 1px rgba(200,169,110,.15), 0 0 32px rgba(200,169,110,.12);
     }
     iframe { width:100%; height:670px; border:0; display:block; }
-    .panel { flex:1 1 320px; }
+    .panel { flex:1 1 340px; min-width:0; }
 
-    .status { font-size:13px; color:var(--txt2); margin:0 0 22px; min-height:18px; }
+    /* loading indicator — visible pendant l'init réelle uniquement */
+    .status {
+      font-size:12px; letter-spacing:.04em; color:var(--txt2); margin:0 0 20px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .status::before {
+      content:''; width:8px; height:8px; border-radius:50%;
+      background:var(--gold1); box-shadow:0 0 8px var(--gold1);
+      animation:pulseDot 1.1s ease-in-out infinite;
+    }
+    @keyframes pulseDot { 0%,100%{opacity:.35;transform:scale(.8);} 50%{opacity:1;transform:scale(1);} }
 
-    .group {
-      background:var(--bg2); border:1px solid var(--brd); border-radius:14px;
-      padding:18px; margin-bottom:16px;
+    /* ── FICHE PRODUIT ── */
+    .product-head { margin:0 0 22px; }
+    .collection {
+      display:block; font-size:10px; letter-spacing:.32em; text-transform:uppercase;
+      color:var(--txt3); margin-bottom:12px;
     }
-    .group h2 {
-      font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--gold);
-      font-weight:600; margin:0 0 14px;
+    .product-title {
+      font-family:'Playfair Display',serif; font-weight:400;
+      font-size:clamp(28px,3.2vw,38px); line-height:1.1; letter-spacing:-.01em;
+      margin:0 0 8px;
+    }
+    .product-sub {
+      font-size:14px; letter-spacing:.02em; color:var(--gold); margin:0 0 18px;
+      min-height:20px; transition:opacity .3s;
+    }
+    .price {
+      font-family:'Playfair Display',serif; font-size:30px; font-weight:400; color:var(--txt);
+      transition:opacity .16s ease, transform .18s ease;
+    }
+    .price.changing { opacity:0; transform:scale(.96); }
+    .price .cur { font-size:20px; color:var(--txt2); margin-left:4px; }
+
+    /* ── CARTES DE VARIANTES ── */
+    .card {
+      background:linear-gradient(160deg,var(--card1),var(--card2));
+      border:1px solid var(--cardbrd); border-radius:10px;
+      padding:16px 16px 18px; margin-bottom:14px;
+    }
+    .card h2 {
+      font-size:10px; text-transform:uppercase; letter-spacing:.18em; color:var(--txt2);
+      font-weight:500; margin:0 0 14px; display:flex; justify-content:space-between; align-items:baseline;
+    }
+    /* Grilles régulières pour un rendu desktop équilibré */
+    .opts { display:grid; gap:12px; }
+    #metals { grid-template-columns:repeat(3,1fr); }
+    #stones { grid-template-columns:repeat(2,1fr); }
+    #shapes { grid-template-columns:repeat(2,1fr); }
+
+    .opt {
+      position:relative; cursor:pointer; border:none; font:inherit; color:inherit;
+      width:100%; min-width:0;
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      transition:transform .18s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .opt:focus-visible { outline:2px solid var(--gold1); outline-offset:3px; }
+
+    /* Métal — bouton plein en radial-gradient */
+    .metal-opt {
+      height:46px; border-radius:8px;
+      font-size:13px; font-weight:500; letter-spacing:.01em;
+      border:1.5px solid rgba(0,0,0,.15);
+      box-shadow:inset 0 1px 2px rgba(255,255,255,.4), inset 0 -2px 4px rgba(0,0,0,.18);
+    }
+    .metal-opt:hover:not(.active) { transform:scale(1.03); box-shadow:0 0 11px var(--glow); }
+    .metal-opt.active {
+      transform:scale(1.04);
+      border-color:rgba(255,255,255,.85);
+      box-shadow:0 0 13px var(--glow), inset 0 1px 2px rgba(255,255,255,.45);
     }
 
-    .chips { display:flex; flex-wrap:wrap; gap:10px; }
-    .chip {
-      display:flex; align-items:center; gap:8px; padding:7px 13px 7px 8px;
-      border:1.5px solid var(--brd); border-radius:999px; background:var(--sur);
-      color:var(--txt); cursor:pointer; font-size:14px;
-      transition:border-color .18s, background .18s, color .18s, transform .18s;
+    /* Pierre — cadre pierre taillée (octogone) */
+    .stone-opt {
+      height:48px; max-width:130px; margin:0 auto;
+      font-size:12px; font-weight:500; color:#fff;
+      clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);
+      text-shadow:0 1px 3px rgba(0,0,0,.35);
     }
-    .chip:hover { border-color:var(--brdh); background:rgba(255,255,255,.05); }
-    .chip.active {
-      border-color:var(--gold); background:rgba(200,169,110,.14); color:var(--gold1);
-      animation:bloom .45s ease-out;
+    .stone-opt.light { color:#20222c; text-shadow:0 1px 2px rgba(255,255,255,.35); }
+    .stone-opt:hover:not(.active) {
+      transform:scale(1.05);
+      filter:drop-shadow(0 0 16px var(--glow)) drop-shadow(0 0 6px var(--glow));
     }
-    .chip:focus-visible { outline:2px solid var(--gold1); outline-offset:2px; }
-    .dot { width:20px; height:20px; border-radius:50%; border:1px solid rgba(255,255,255,.18); flex:none; }
-
-    @keyframes bloom {
-      0%   { transform:scale(1); }
-      45%  { transform:scale(1.06); }
-      100% { transform:scale(1); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .chip.active { animation:none; }
-      .viewer-frame { transition:none; }
+    .stone-opt.active {
+      transform:scale(1.07);
+      filter:drop-shadow(0 0 16px var(--glow)) drop-shadow(0 0 6px var(--glow));
+      box-shadow:inset 0 0 0 2px rgba(255,255,255,.8);
     }
 
-    .engrave { display:flex; flex-direction:column; gap:6px; }
+    /* Forme — cadre silhouette + nom dessous */
+    .shape-opt {
+      flex-direction:column; gap:9px;
+      padding:14px 8px 12px; border-radius:10px;
+      background:var(--sur); border:1.5px solid var(--brd);
+    }
+    .shape-opt:hover { border-color:var(--brdh); }
+    .shape-opt.active { border-color:rgba(200,169,110,.6); background:rgba(200,169,110,.06); }
+    .shape-frame {
+      width:42px; height:42px; display:flex; align-items:center; justify-content:center;
+      border:2px solid var(--gold); background:rgba(200,169,110,.08);
+      transition:box-shadow .2s ease;
+    }
+    .shape-frame.corolle { border-radius:50%; }
+    .shape-frame.petale  { width:32px; height:46px; border-radius:50%; }  /* ovale symétrique */
+    .shape-dot {
+      width:9px; height:9px; border-radius:50%;
+      background:rgba(200,169,110,.3); transition:background .2s ease;
+    }
+    .shape-opt.active .shape-frame { box-shadow:0 0 13px rgba(200,169,110,.5); }
+    .shape-opt.active .shape-dot { background:var(--gold); }
+    .shape-name { font-size:13px; color:var(--txt); letter-spacing:.01em; }
+    .shape-opt.active .shape-name { color:var(--gold1); }
+
+    /* Gravure */
+    .card h2 .counter { font-size:11px; color:var(--txt3); font-weight:400; letter-spacing:.05em; }
+    .card h2 .counter.max { color:var(--gold1); }
     .engrave input {
-      padding:11px 13px; border:1.5px solid var(--brd); border-radius:10px;
+      width:100%; padding:11px 13px; border:1.5px solid var(--brd); border-radius:8px;
       background:var(--bg); color:var(--txt); font:inherit;
     }
     .engrave input::placeholder { color:var(--txt3); }
     .engrave input:focus {
       outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,169,110,.15);
     }
-    .counter { font-size:12px; color:var(--txt3); text-align:right; }
-    .counter.max { color:var(--gold1); }
-    .hint { font-size:12px; color:var(--txt2); margin-top:10px; line-height:1.5; }
-    code { background:rgba(255,255,255,.06); color:var(--gold1); padding:1px 5px; border-radius:4px; font-size:12px; }
 
-    .readout { font-size:13px; color:var(--txt); line-height:1.9; }
-    .readout b { color:var(--txt2); font-weight:600; }
-    .readout span { transition:opacity .3s; }
-    .readout span.swap { opacity:0; }
+    /* ── CTA ── */
+    .cta {
+      display:block; width:100%; margin-top:20px; padding:15px 20px;
+      text-align:center; text-decoration:none;
+      font-size:14px; font-weight:500; letter-spacing:.04em; color:#fff;
+      background:linear-gradient(135deg,#7a6bf0,#6b5ce7);
+      border-radius:8px; box-shadow:0 4px 16px rgba(107,92,231,.35);
+      transition:transform .18s ease, box-shadow .25s ease;
+    }
+    .cta:hover { transform:translateY(-1px); box-shadow:0 6px 22px rgba(107,92,231,.45); }
+    .cta:active { transform:translateY(0); }
 
     /* ── FOOTER ── */
     footer {
@@ -157,11 +222,33 @@
     footer a { color:var(--txt3); text-decoration:none; transition:color .25s; }
     footer a:hover { color:var(--txt2); }
 
+    @media (prefers-reduced-motion: reduce) {
+      .opt, .viewer-frame, .price, .cta { transition:none; }
+      .status::before { animation:none; }
+    }
+
+    /* ── MOBILE : viewer sticky ── */
     @media (max-width:768px) {
       header { padding:18px 20px; }
-      .hero { padding:40px 20px 4px; }
-      .wrap { padding:20px 20px 60px; }
+      /* hauteur du viewer mobile — proportion plus équilibrée qu'une bande écrasée */
+      .wrap { --viewer-h:clamp(280px,52vw,360px); padding:20px 20px 60px; gap:0; }
       footer { padding:24px 20px; flex-direction:column; gap:12px; }
+      .floral-divider { margin-top:22px; }
+
+      .viewer {
+        position:sticky; top:0; z-index:10; flex-basis:100%;
+        background:var(--bg); padding-bottom:0;
+      }
+      iframe { height:var(--viewer-h); }
+      .viewer-frame { border-radius:12px; }
+
+      /* bloc prix collé sous le viewer sticky : solide en haut (pas de bleed
+         au-dessus de "Collection fleur"), fade transparent sous le prix */
+      .product-head {
+        position:sticky; top:calc(var(--viewer-h) + 2px); z-index:9;
+        background:linear-gradient(var(--bg) 82%, transparent);
+        padding-top:16px; padding-bottom:14px; margin-bottom:16px;
+      }
     }
   </style>
 </head>
@@ -174,12 +261,6 @@
       <span class="brand-mark-sub">Interactive</span>
     </div>
   </header>
-
-  <div class="hero">
-    <p class="eyebrow">Collection fleur</p>
-    <h1>Configurez votre <em>bague</em></h1>
-    <p>Métal, pierre et forme du chaton en temps réel — puis gravez l'intérieur de l'anneau à votre message.</p>
-  </div>
 
   <picture>
     <source srcset="assets/liseres-fleur.gif" media="(prefers-reduced-motion: no-preference)">
@@ -197,37 +278,38 @@
     </div>
 
     <div class="panel">
+      <div class="product-head">
+        <span class="collection">Collection fleur</span>
+        <h1 class="product-title" id="productTitle">Bague Corolle</h1>
+        <p class="product-sub" id="productSub">&nbsp;</p>
+        <div class="price" id="price">—<span class="cur"> €</span></div>
+      </div>
+
       <p class="status" id="status">Initialisation…</p>
 
-      <div class="group">
+      <div class="card">
         <h2>Métal</h2>
-        <div class="chips" id="metals"></div>
+        <div class="opts" id="metals"></div>
       </div>
 
-      <div class="group">
+      <div class="card">
         <h2>Pierre</h2>
-        <div class="chips" id="stones"></div>
+        <div class="opts" id="stones"></div>
       </div>
 
-      <div class="group">
+      <div class="card">
         <h2>Forme</h2>
-        <div class="chips" id="shapes"></div>
+        <div class="opts" id="shapes"></div>
       </div>
 
-      <div class="group">
-        <h2>Gravure</h2>
+      <div class="card">
+        <h2>Gravure <span class="counter"><span id="count">0</span>/20</span></h2>
         <div class="engrave">
-          <input id="engrave" maxlength="20" placeholder="ex : S + R — 09.2021" autocomplete="off">
-          <div class="counter"><span id="count">0</span>/20</div>
+          <input id="engrave" maxlength="20" placeholder="ex : S + R — 09.2020" autocomplete="off">
         </div>
-        <p class="hint">Écrit en direct dans l'objet Texte 3D <code>3D Text</code> de la scène.
-        Si rien ne bouge, vérifie le nom de l'objet dans Studio et reporte-le dans <code>TEXT_OBJECT</code>.</p>
       </div>
 
-      <div class="group">
-        <h2>État actuel</h2>
-        <div class="readout" id="readout">—</div>
-      </div>
+      <a class="cta" href="/#contact">Demander un devis</a>
     </div>
   </div>
 
@@ -240,34 +322,56 @@
     import { VctrModelApi } from "https://app.vectary.com/studio-lite/scripts/api.js";
 
     // --- Config à garder synchro avec les noms réels dans Studio -----------
+    // Métal : le nom affiché = le nom du matériau dans Studio (déjà en FR).
     const METALS = [
-      { name: "Or",       color: "#d9b44a" },
-      { name: "Or Blanc", color: "#e3e3e3" },
-      { name: "Or Rose",  color: "#e5b19e" },
+      { name: "Or",       grad:"radial-gradient(circle at 30% 20%, #fdf0c8, #dfc98e 55%, #a9863f)", text:"#3a2c0e", glow:"rgba(223,201,142,.6)" },
+      { name: "Or Blanc", grad:"radial-gradient(circle at 30% 20%, #ffffff, #e6e6ec 55%, #b6b6c2)", text:"#2a2a34", glow:"rgba(230,230,236,.6)" },
+      { name: "Or Rose",  grad:"radial-gradient(circle at 30% 20%, #ffe6da, #e5b19e 55%, #c8846c)", text:"#4a2318", glow:"rgba(230,184,156,.6)" },
     ];
+    // Pierre : label FR affiché ↔ nom d'objet Vectary EN (on ne touche pas la scène 3D).
     const STONES = [
-      { name: "Diamond",  color: "#eef0f7" },
-      { name: "Sapphire", color: "#1f3f9e" },
-      { name: "Ruby",     color: "#8f1d2e" },
-      { name: "Emerald",  color: "#1e6b3f" },
+      { label:"Diamant",  name:"Diamond",  grad:"radial-gradient(circle at 30% 20%, #ffffff, #dfe6f2 55%, #b7c3d8)", light:true,  glow:"rgba(215,228,248,.75)" },
+      { label:"Saphir",   name:"Sapphire", grad:"radial-gradient(circle at 30% 20%, #5075d6, #1f3f9e 55%, #122352)", light:false, glow:"rgba(63,100,214,.7)" },
+      { label:"Rubis",    name:"Ruby",     grad:"radial-gradient(circle at 30% 20%, #d94f63, #8f1d2e 55%, #4f0e18)", light:false, glow:"rgba(200,50,70,.7)" },
+      { label:"Émeraude", name:"Emerald",  grad:"radial-gradient(circle at 30% 20%, #3fae74, #1e6b3f 55%, #0d3320)", light:false, glow:"rgba(46,150,90,.7)" },
+    ];
+    // Forme : nom d'objet Vectary ↔ nom produit affiché.
+    const SHAPES = [
+      { name:"Corolle", frame:"corolle" },
+      { name:"Pétale",  frame:"petale" },
     ];
     const VARIANT = "Pierres Variantes";        // renomme ici si tu as renommé le container
-    let FORMES = ["Corolle", "Pétale"];         // objets du switcher ; DOIT matcher EXACTEMENT le nom dans Studio (accent compris)
     const TEXT_OBJECT = "3D Text";              // nom de l'objet Texte 3D pour la gravure
     // -----------------------------------------------------------------------
 
     const METAL_NAMES = METALS.map(m => m.name);
-    const STONE_NAMES = STONES.map(s => s.name);
+    const STONE_NAMES = STONES.map(s => s.name);              // noms Vectary EN
+    const STONE_FR    = Object.fromEntries(STONES.map(s => [s.name, s.label]));
+
+    // Grille de prix additive interne — l'UI n'affiche jamais le détail, seulement le total.
+    const PRICE = {
+      base:  { "Corolle":1350, "Pétale":1200 },
+      metal: { "Or":300, "Or Blanc":350, "Or Rose":320 },
+      stone: { "Diamond":900, "Sapphire":450, "Ruby":500, "Emerald":550 },
+    };
+    function computePrice(metal, stone, shape) {
+      let p = PRICE.base[shape] ?? PRICE.base["Corolle"];
+      p += PRICE.metal[metal] ?? 0;
+      p += PRICE.stone[stone] ?? 0;
+      return p;
+    }
 
     const statusEl     = document.getElementById("status");
-    const readoutEl    = document.getElementById("readout");
-    const viewerFrame   = document.getElementById("viewerFrame");
+    const viewerFrame  = document.getElementById("viewerFrame");
+    const titleEl      = document.getElementById("productTitle");
+    const subEl        = document.getElementById("productSub");
+    const priceEl      = document.getElementById("price");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const api = new VctrModelApi("vectary_embed");
     window.api = api;
     await api.init();
-    statusEl.textContent = "Prêt.";
+    statusEl.style.display = "none";   // "Initialisation…" masqué une fois le modèle chargé
 
     function stripIds(c) {
       const x = { ...c };
@@ -299,43 +403,49 @@
         .filter(c => "active_object" in c && c.variant === VARIANT && c.active_object !== objName)
         .map(c => ({ ...stripIds(c), active_object: objName }));
       if (next.length) { await api.setConfigurationState(next); await refresh(); pulseViewer(); }
-      else statusEl.textContent = `${objName} : aucune forme portant ce nom dans le switcher.`;
     }
 
     // --- Gravure : écrit directement dans l'objet Texte 3D -----------------
     async function setEngraving(text) {
-      try {
-        await api.setText3d(TEXT_OBJECT, { text });
-        statusEl.textContent = text ? `Gravure : ${text}` : "Gravure effacée.";
-      } catch (e) {
-        statusEl.textContent = `Objet texte ${TEXT_OBJECT} introuvable — vérifie le nom dans Studio.`;
-      }
+      try { await api.setText3d(TEXT_OBJECT, { text }); } catch (e) {}
     }
     function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
 
     // --- Contrôles ---------------------------------------------------------
-    function chip(container, label, color, onClick) {
-      const el = document.createElement("div");
-      el.className = "chip"; el.dataset.name = label; el.tabIndex = 0;
-      el.innerHTML = `<span class="dot" style="background:${color}"></span>${label}`;
-      const run = () => { statusEl.textContent = `→ ${label}…`; onClick(); };
-      el.addEventListener("click", run);
-      el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); run(); } });
-      container.appendChild(el);
-      return el;
-    }
-
     const metalsBox = document.getElementById("metals");
     const stonesBox = document.getElementById("stones");
     const shapesBox = document.getElementById("shapes");
 
-    METALS.forEach(m => chip(metalsBox, m.name, m.color, () => setMaterial(METAL_NAMES, m.name)));
-    STONES.forEach(s => chip(stonesBox, s.name, s.color, () => setMaterial(STONE_NAMES, s.name)));
-    function renderShapes() {
-      shapesBox.innerHTML = "";
-      FORMES.forEach(f => chip(shapesBox, f, "#cfc8bb", () => setShape(f)));
+    function optButton(container, dataName, cls, html, onClick) {
+      const el = document.createElement("button");
+      el.type = "button";
+      el.className = "opt " + cls;
+      el.dataset.name = dataName;
+      el.innerHTML = html;
+      el.addEventListener("click", onClick);
+      container.appendChild(el);
+      return el;
     }
-    renderShapes();
+
+    METALS.forEach(m => {
+      const el = optButton(metalsBox, m.name, "metal-opt", m.name, () => setMaterial(METAL_NAMES, m.name));
+      el.style.background = m.grad;
+      el.style.color = m.text;
+      el.style.setProperty("--glow", m.glow);
+    });
+
+    STONES.forEach(s => {
+      const el = optButton(stonesBox, s.name, "stone-opt" + (s.light ? " light" : ""), s.label,
+                           () => setMaterial(STONE_NAMES, s.name));
+      el.style.background = s.grad;
+      el.style.setProperty("--glow", s.glow);
+    });
+
+    SHAPES.forEach(s => {
+      const html = `<span class="shape-frame ${s.frame}"><span class="shape-dot"></span></span>` +
+                   `<span class="shape-name">${s.name}</span>`;
+      optButton(shapesBox, s.name, "shape-opt", html, () => setShape(s.name));
+    });
 
     const engraveInput = document.getElementById("engrave");
     const countEl = document.getElementById("count");
@@ -345,6 +455,28 @@
     });
     engraveInput.addEventListener("input", debounce((e) => setEngraving(e.target.value), 250));
 
+    // --- Affichage fiche produit -------------------------------------------
+    function updatePrice(value) {
+      const formatted = value.toLocaleString("fr-FR") + '<span class="cur"> €</span>';
+      if (priceEl.dataset.val === String(value)) return;
+      priceEl.dataset.val = String(value);
+      if (reduceMotion) { priceEl.innerHTML = formatted; return; }
+      priceEl.classList.add("changing");
+      setTimeout(() => {
+        priceEl.innerHTML = formatted;
+        priceEl.classList.remove("changing");
+      }, 130);
+    }
+
+    function updateFiche(metal, stone, shape) {
+      titleEl.textContent = "Bague " + (shape ?? "Corolle");
+      const parts = [];
+      if (metal) parts.push(metal);
+      if (stone) parts.push(STONE_FR[stone] ?? stone);
+      subEl.textContent = parts.length ? parts.join(" · ") : " ";
+      updatePrice(computePrice(metal, stone, shape));
+    }
+
     async function refresh() {
       const cfg = await api.getConfigurationState();
       let metal = null, stone = null, shape = null;
@@ -353,12 +485,10 @@
         if ("active_material" in c && STONE_NAMES.includes(c.active_material)) stone = c.active_material;
         if ("active_object" in c && c.variant === VARIANT) shape = c.active_object;
       }
-      const mark = (box, val) => box.querySelectorAll(".chip")
+      const mark = (box, val) => box.querySelectorAll(".opt")
         .forEach(ch => ch.classList.toggle("active", ch.dataset.name === val));
       mark(metalsBox, metal); mark(stonesBox, stone); mark(shapesBox, shape);
-      readoutEl.innerHTML =
-        `<b>Métal</b> : ${metal ?? "—"}<br><b>Pierre</b> : ${stone ?? "—"}<br><b>Forme</b> : ${shape ?? "—"}`;
-      statusEl.textContent = "Prêt.";
+      updateFiche(metal, stone, shape);
     }
 
     try { await api.addEventListener("configurator_state_change", () => refresh()); } catch (e) {}
