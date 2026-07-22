@@ -410,6 +410,110 @@ h2 em { font-style: italic; color: var(--vl); }
   color: var(--txt3);
 }
 
+/* lazy-load poster (démo stylo) */
+.demo-poster {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 680px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  overflow: hidden;
+  background: var(--bg2);
+  font: inherit;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+.demo-poster-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* flou graduité : net en haut, flou en bas — profondeur mystérieuse */
+.demo-poster-blur {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 42%, rgba(0,0,0,.6) 72%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 42%, rgba(0,0,0,.6) 72%, #000 100%);
+}
+.demo-poster::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* dégradé vertical + vignette pour l'atmosphère et la lisibilité */
+  background:
+    radial-gradient(120% 90% at 50% 42%, rgba(7,7,15,0) 40%, rgba(7,7,15,.55) 100%),
+    linear-gradient(to bottom, rgba(7,7,15,.28) 0%, rgba(7,7,15,.1) 38%, rgba(7,7,15,.55) 72%, rgba(7,7,15,.9) 100%);
+  pointer-events: none;
+}
+.demo-poster-logo {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 190px;
+  max-width: 60%;
+  height: auto;
+  opacity: .92;
+  pointer-events: none;
+}
+.demo-poster-cta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 64px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  pointer-events: none;
+}
+.demo-poster-play {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: rgba(7,7,15,.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .3s ease, transform .3s ease;
+}
+.demo-poster:hover .demo-poster-play { background: rgba(200,169,110,.22); transform: scale(1.06); }
+.demo-poster-play svg { width: 18px; height: 18px; margin-left: 2px; fill: #e8d9c4; }
+.demo-poster-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: #e8d9c4;
+}
+.demo-poster-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(7,7,15,.9);
+  color: var(--txt2);
+  font-size: 12px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
 /* e-commerce product card */
 .demo-right:has(.bague-card) {
   display: flex;
@@ -967,9 +1071,12 @@ footer {
     border-right: none;
     border-bottom: 1px solid var(--brd);
   }
-  .demo-right iframe {
+  .demo-right iframe,
+  .demo-poster {
     height: 420px;
   }
+  .demo-poster-cta { bottom: 44px; }
+  .demo-badge { display: none; }
   .demo-right:has(.bague-card) { padding: 40px 24px; }
 
   /* ── SERVICES ── */
@@ -1118,13 +1225,31 @@ footer {
       <a href="#contact" class="btn-primary reveal d4" style="align-self:flex-start">Créer mon configurateur</a>
     </div>
     <div class="demo-right">
-      <iframe
-        src="https://app.vectary.com/p/2yVn04SUkDqOO85BQ6W8dx"
-        frameborder="0"
-        allow="autoplay; xr-spatial-tracking"
-        allowfullscreen
-        title="Démo configurateur 3D — stylo premium"
-      ></iframe>
+      <button
+        type="button"
+        class="demo-poster"
+        id="demoPoster"
+        data-vectary="https://app.vectary.com/p/2yVn04SUkDqOO85BQ6W8dx"
+        aria-label="Démarrer la démo interactive du configurateur 3D"
+      >
+        <img
+          class="demo-poster-media"
+          src="assets/stylo-poster.webp"
+          alt="Aperçu du configurateur 3D — stylo premium"
+          width="1000"
+          height="680"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="demo-poster-blur"></span>
+        <img class="demo-poster-logo" src="assets/delphinium-ashford.webp" alt="Delphinium Ashford" width="1456" height="300" decoding="async">
+        <span class="demo-poster-cta">
+          <span class="demo-poster-play">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+          </span>
+          <span class="demo-poster-label">Cliquez pour démarrer</span>
+        </span>
+      </button>
       <div class="demo-badge">
         <div class="live-dot"></div>
         <span>Configurateur live · Premium</span>
@@ -1238,7 +1363,7 @@ footer {
     <div class="demo-right">
       <a href="bague/index.html" class="bague-card reveal" aria-label="Configurer la bague en 3D — voir le produit">
         <div class="bague-card-media">
-          <div class="bague-card-fallback" aria-hidden="true"><span class="ring"></span></div>
+          <div class="bague-card-fallback" aria-hidden="true"></div>
           <img src="bague/assets/bague-produit.jpg" alt="Bague or & pierre précieuse — Delphinium" loading="lazy" onerror="this.style.display='none'">
           <span class="bague-card-badge"><span class="live-dot"></span>Configurable 3D</span>
           <span class="bague-card-hover">Configurer en 3D →</span>
@@ -1586,6 +1711,39 @@ footer {
       requestAnimationFrame(drawProc);
     }
     drawProc();
+  }
+
+  /* ── Lazy-load du configurateur Vectary (démo stylo) ── */
+  var demoPoster = document.getElementById('demoPoster');
+  if (demoPoster) {
+    var demoLoaded = false;
+    demoPoster.addEventListener('click', function() {
+      if (demoLoaded) return;
+      demoLoaded = true;
+
+      var container = demoPoster.parentNode;
+
+      // Indicateur de chargement pendant l'init de Vectary
+      var loading = document.createElement('div');
+      loading.className = 'demo-poster-loading';
+      loading.textContent = 'Initialisation…';
+      container.appendChild(loading);
+
+      // Création dynamique de l'iframe (aucune requête Vectary avant ce clic)
+      var iframe = document.createElement('iframe');
+      iframe.src = demoPoster.getAttribute('data-vectary');
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'autoplay; xr-spatial-tracking');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('title', 'Démo configurateur 3D — stylo premium');
+
+      iframe.addEventListener('load', function() {
+        if (loading.parentNode) loading.parentNode.removeChild(loading);
+        if (demoPoster.parentNode) demoPoster.parentNode.removeChild(demoPoster);
+      });
+
+      container.appendChild(iframe);
+    });
   }
 
 })();
