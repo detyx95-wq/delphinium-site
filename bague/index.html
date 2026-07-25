@@ -313,7 +313,7 @@
     @media (max-width:768px) {
       header { padding:18px 22px; }
       .wrap {
-        --viewer-h:clamp(320px,78vw,400px);
+        --viewer-h:clamp(220px,52vw,300px);
         grid-template-columns:1fr;
         grid-template-areas:"viewer" "head" "panel";
         gap:0; column-gap:0; padding:12px 22px 60px;
@@ -323,7 +323,7 @@
       /* sticky pleine largeur : on annule le padding latéral du .wrap (22px) → bord à bord */
       .viewer {
         position:sticky; top:0; z-index:10;
-        background:var(--bg); margin:0 -22px; padding:8px 16px 10px;
+        background:var(--bg); margin:0 -22px; padding:6px 16px 6px;
       }
       .viewer-inner { max-width:none; margin:0; }
       iframe { height:var(--viewer-h); }
@@ -335,12 +335,12 @@
       /* bloc titre/prix collé sous le viewer sticky — pleine largeur (comme le viewer)
          + fondu doux sous le prix pour supprimer toute coupure avec le contenu qui défile */
       .product-head {
-        position:sticky; top:calc(var(--viewer-h) + 18px); z-index:9;
+        position:sticky; top:calc(var(--viewer-h) + 12px); z-index:9;
         background:var(--bg);
-        margin:0 -22px; padding:12px 22px 10px;
+        margin:0 -22px; padding:8px 22px 6px;
       }
       .product-head::after {
-        content:''; position:absolute; left:0; right:0; top:100%; height:30px;
+        content:''; position:absolute; left:0; right:0; top:100%; height:20px;
         background:linear-gradient(var(--bg), transparent); pointer-events:none;
       }
     }
@@ -674,12 +674,32 @@
       bloomers.forEach(el => el.classList.add("bloom"));
     }
 
+    // Mémorise la dernière animation lumière déclenchée, pour ne pas la rejouer inutilement.
+    let lastLightAnim = null;
     async function setMaterial(fromNames, newMat) {
       const cfg = await api.getConfigurationState();
       const next = cfg
         .filter(c => "active_material" in c && fromNames.includes(c.active_material) && c.active_material !== newMat)
         .map(c => ({ ...stripIds(c), active_material: newMat }));
       if (next.length) await api.setConfigurationState(next);
+      // Animation lumière : "Light In" pour le diamant, "Light Out" pour les autres pierres.
+      // Ne se déclenche que pour un changement de pierre (setMaterial est aussi utilisé pour les métaux).
+      if (STONE_NAMES.includes(newMat)) {
+        const wantLight = newMat === "Diamond" ? "Light In" : "Light Out";
+        // On ne (re)joue l'animation que si l'état lumière change réellement.
+        if (wantLight !== lastLightAnim) {
+          try {
+            if (wantLight === "Light In") {
+              await api.stopAnimation("Light Out");
+              await api.playAnimation("Light In");
+            } else {
+              await api.stopAnimation("Light In");
+              await api.playAnimation("Light Out");
+            }
+            lastLightAnim = wantLight;
+          } catch (e) {}
+        }
+      }
       await refresh();
       pulseViewer();
     }
