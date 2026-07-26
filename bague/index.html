@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="clair">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,6 +26,38 @@
       --stone-primary:#9DB8A2;
       --stone-glow:#C0DCC5;
       --stone-petal:#A895C4;   /* teinte pétales floraux, dérive de la pierre */
+
+      /* Ambiance atmosphérique — surchargée par le thème clair */
+      --card-blur:10px;
+      --water-opacity:.75;
+      --water-blur:80px;
+      --grain-opacity:.045;
+      --grain-blend:overlay;
+    }
+
+    /* ── Thème CLAIR (« Aurore ») — pivot ivoire/Nymphéas lumineux ──
+       Ne fait que fournir d'autres valeurs aux MÊMES variables (aucun système parallèle).
+       NB : --metal-* / --stone-* sont ensuite repris en inline par le configurateur
+       Vectary dès qu'un métal/une pierre est choisi ; ces valeurs servent d'assise claire. */
+    :root[data-theme="clair"] {
+      --bg:#F3ECDE; --bg2:#EFE7D6;
+      --panel:rgba(251,247,238,.72);
+      --panel-line:rgba(46,42,34,.12);
+      --panel-line-h:rgba(46,42,34,.24);
+      --ink:#2E2A22; --ink-soft:#8a8272; --ink-faint:rgba(46,42,34,.4);
+      --mauve:#7A6FA0; --mauve-deep:#5B5088;
+
+      --metal-primary:#AD8A4E;
+      --metal-accent:#8a6f3d;
+      --stone-primary:#6f9b73;
+      --stone-glow:#4f7a53;
+      --stone-petal:#5B5A96;
+
+      --card-blur:14px;
+      --water-opacity:.9;
+      --water-blur:60px;
+      --grain-opacity:.06;
+      --grain-blend:multiply;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -33,6 +65,7 @@
       margin:0; font-family:'Cormorant Garamond',Georgia,serif; font-weight:400;
       background:var(--bg); color:var(--ink); min-height:100vh;
       -webkit-font-smoothing:antialiased;
+      transition: background 500ms ease, color 500ms ease;
     }
     /* familles d'affichage */
     .brand-mark-name { font-family:'Yeseva One',serif; }
@@ -51,12 +84,13 @@
         radial-gradient(ellipse 40% 45% at 12% 28%, color-mix(in srgb, var(--stone-petal) 55%, transparent), transparent 70%),
         radial-gradient(ellipse 55% 50% at 28% 88%, color-mix(in srgb, var(--mauve) 38%, transparent), transparent 70%),
         radial-gradient(ellipse 40% 40% at 92% 78%, color-mix(in srgb, var(--metal-accent) 32%, transparent), transparent 70%);
-      filter: blur(80px); opacity:.75;
-      transition: background 900ms ease;
+      filter: blur(var(--water-blur)); opacity:var(--water-opacity);
+      transition: background 900ms ease, opacity 500ms ease, filter 500ms ease;
     }
     .grain {
       position:fixed; inset:0; z-index:1; pointer-events:none;
-      opacity:.045; mix-blend-mode:overlay;
+      opacity:var(--grain-opacity); mix-blend-mode:var(--grain-blend);
+      transition:opacity 500ms ease;
     }
 
     /* ── HEADER ── */
@@ -80,6 +114,26 @@
       font-size:10px; letter-spacing:.28em; text-transform:uppercase;
       color:var(--metal-primary); font-weight:500; transition:color .5s ease;
     }
+
+    /* ── SÉLECTEUR D'AMBIANCE (Crépuscule / Aurore) ── */
+    .ambience {
+      position:fixed; top:22px; right:48px; z-index:10;
+      display:flex; gap:2px; padding:3px;
+      background:var(--panel); border:1px solid var(--panel-line); border-radius:999px;
+      backdrop-filter:blur(var(--card-blur));
+      box-shadow:0 8px 24px -10px rgba(0,0,0,.3);
+      transition: background 500ms ease, border-color 500ms ease;
+    }
+    .amb-btn {
+      border:none; cursor:pointer; padding:8px 16px; border-radius:999px;
+      font-family:'Marcellus',serif; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+      background:transparent; color:var(--ink-soft); transition:all 250ms ease;
+    }
+    .amb-btn.active {
+      background:linear-gradient(120deg, var(--mauve-deep), var(--mauve));
+      color:#fff; box-shadow:0 4px 14px -4px rgba(0,0,0,.35);
+    }
+    .amb-btn:focus-visible { outline:2px solid var(--metal-accent); outline-offset:2px; }
 
     /* ── LAYOUT CONFIGURATEUR ── */
     .wrap {
@@ -161,7 +215,8 @@
     .panel { display:flex; flex-direction:column; gap:20px; }
     .card {
       position:relative; padding:22px 24px; border-radius:2px;
-      background:var(--panel); backdrop-filter:blur(10px); overflow:visible;
+      background:var(--panel); backdrop-filter:blur(var(--card-blur)); overflow:visible;
+      transition: background 500ms ease;
     }
     /* cadre peint léger sur chaque carte */
     .card-frame { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
@@ -270,6 +325,18 @@
     }
     .stone-opt.active .shape-name { color:var(--gem-glow); }
 
+    /* ── Aurore : on assombrit UNIQUEMENT les textes teintés (glow pierre / métal),
+       trop clairs pour rester lisibles sur fond ivoire. Les gemmes ne sont pas touchées. ── */
+    :root[data-theme="clair"] .stone-opt.active .shape-name {
+      color: color-mix(in srgb, var(--gem-glow) 45%, #2E2A22);
+    }
+    :root[data-theme="clair"] .product-sub {
+      color: color-mix(in srgb, var(--stone-primary) 60%, #2E2A22);
+    }
+    :root[data-theme="clair"] .brand-mark-sub {
+      color: color-mix(in srgb, var(--metal-primary) 55%, #2E2A22);
+    }
+
     /* Gravure */
     .card h2 .counter { font-size:11px; color:var(--ink-faint); font-weight:400; letter-spacing:.05em; }
     .card h2 .counter.max { color:var(--metal-accent); }
@@ -312,6 +379,9 @@
     /* ── MOBILE : viewer sticky (comportement préservé) ── */
     @media (max-width:768px) {
       header { padding:18px 22px; }
+
+      /* sélecteur d'ambiance : bandeau centré en bas d'écran plutôt qu'en haut à droite */
+      .ambience { top:auto; bottom:18px; right:18px; left:18px; justify-content:center; }
       .wrap {
         --viewer-h:clamp(220px,52vw,300px);
         grid-template-columns:1fr;
@@ -346,7 +416,7 @@
     }
   </style>
 </head>
-<body>
+<body data-theme="clair">
 
   <!-- ── Motifs floraux SVG réutilisables (fill piloté par variables CSS) ── -->
   <svg style="position:absolute;width:0;height:0" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -435,6 +505,22 @@
       <span class="brand-mark-sub">Interactive</span>
     </div>
   </header>
+
+  <!-- ── Sélecteur d'ambiance visuelle (pill fixe) ── -->
+  <div class="ambience" role="group" aria-label="Ambiance visuelle">
+    <button type="button" class="amb-btn" data-theme-btn="sombre" onclick="setTheme('sombre', this)">Crépuscule</button>
+    <button type="button" class="amb-btn active" data-theme-btn="clair" onclick="setTheme('clair', this)">Aurore</button>
+  </div>
+
+  <!-- Bascule d'ambiance — script classique (global) : indépendant du module Vectary -->
+  <script>
+    function setTheme(theme, btn) {
+      document.body.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-theme', theme);
+      document.querySelectorAll('.amb-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+  </script>
 
   <div class="wrap">
     <div class="product-head">
