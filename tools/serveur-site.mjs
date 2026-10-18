@@ -52,7 +52,14 @@ http.createServer((req, res) => {
     req.on('end', () => { fs.writeFileSync(path.join(dir, name + '.jpg'), Buffer.concat(chunks)); res.end(dir); });
     return;
   }
-  if(req.method === 'POST'){ req.resume(); res.writeHead(303, { Location: '/merci/' }); return res.end(); }
+  // formulaire : comme Netlify, un envoi en arrière-plan sur « / » répond 200 ;
+  // un envoi classique est redirigé vers la page indiquée par l'attribut action
+  if(req.method === 'POST'){
+    req.resume();
+    const target = new URL(req.url, 'http://x').pathname;
+    if(target === '/'){ res.writeHead(200, { 'Content-Type':'text/plain; charset=utf-8' }); return res.end('ok'); }
+    res.writeHead(303, { Location: target }); return res.end();
+  }
   let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
   if(p.split('/').some(seg => seg.startsWith('.') || seg === '_headers' || seg === '_redirects')){ return send(req, res, path.join(ROOT, '404.html'), 404); }
   if(p.endsWith('/')) p += 'index.html';

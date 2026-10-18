@@ -69,7 +69,15 @@ if(form){
     if(pref === PREF_MAIL && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) msg = EN ? 'Please enter a valid email address.' : 'Indiquez une adresse e-mail valide.';
     if(pref === PREF_TEL && tel.value.replace(/[^\d+]/g,'').length < 9) msg = EN ? 'Please enter a valid phone number.' : 'Indiquez un numéro de téléphone valide.';
     if(msg){ e.preventDefault(); err.textContent = msg; (pref === PREF_MAIL ? email : tel).focus(); return; }
-    form.querySelector('button[type=submit]').setAttribute('aria-busy', 'true');
+    // envoi à Netlify en arrière-plan, puis page de remerciement de la langue affichée
+    // (Netlify ne garde qu'une page de confirmation par formulaire : celle de la version française)
+    e.preventDefault();
+    const btn = form.querySelector('button[type=submit]');
+    btn.setAttribute('aria-busy', 'true'); btn.disabled = true;
+    fetch('/', { method:'POST', headers:{ 'Content-Type':'application/x-www-form-urlencoded' },
+                 body:new URLSearchParams(new FormData(form)).toString() })
+      .then(r => { if(!r.ok) throw new Error(r.status); location.href = form.getAttribute('action'); })
+      .catch(() => { btn.disabled = false; form.submit(); });   // secours : envoi classique
   });
 
   document.documentElement.classList.add('js');
