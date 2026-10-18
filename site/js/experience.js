@@ -306,7 +306,7 @@ function layout(){
 
   screenToWorld(L.mob?.5:.665, L.mob?.44:.6, L.main);
   const xs=L.mob?[.2,.5,.8]:[.3,.52,.74];
-  xs.forEach((x,j)=>screenToWorld(x, L.mob?.52:.64, L.fin[j]));
+  xs.forEach((x,j)=>screenToWorld(x, L.mob?.47:.64, L.fin[j]));
   if(S){ L.socle.copy(L.main); L.socle.y -= .42 + S.h; }
   placePicks();
   placeSketch();
@@ -326,6 +326,8 @@ function placePicks(){
     const [x,y]=toScreen(c), [x2]=toScreen(c.clone().setX(c.x+1.7*k));
     const d=Math.min(Math.max(80,(x2-x)*2), W*(L.mob?.3:.2));
     Object.assign(picks[j].style,{left:x+'px',top:y+'px',width:d+'px',height:d+'px'});
+    // bas des bijoux et de leurs noms : la pastille de choix se place juste dessous (mobile)
+    if(j===0) stage.style.setProperty('--below', Math.round(y + d/2 + 78) + 'px');
   });
 }
 

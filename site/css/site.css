@@ -322,7 +322,9 @@ body.no3d #experience{height:auto}   /* sans 3D : un seul écran au lieu de 620v
   .chap h2{font-size:26px}.chap p{font-size:15px}.facts{display:none}
   body.end .pill{transform:translateY(30px)}
   .progress{bottom:auto;top:calc(clamp(14px,2.6vh,28px) + 64px);width:90px}
-  .choose{top:calc(clamp(14px,2.6vh,28px) + 70px)}
+  /* mobile : la pastille passe sous les trois bijoux */
+  .choose{top:var(--below,60vh);bottom:auto;left:12px;right:12px;width:auto;padding:20px 22px;border-radius:24px;transform:translateY(12px)}
+  .choose h2{font-size:26px}.choose p{font-size:14px}
   .pick .lb b{font-size:19px}.pick .lb span{font-size:13px}
   .hero-sketch{opacity:.6}
   .studio-grid,.records,.roi-head,.figures,.plans{grid-template-columns:1fr}
