@@ -1,0 +1,14 @@
+{
+  "name": "Delphinium Interactive",
+  "short_name": "Delphinium",
+  "description": "Configurateurs 3D temps réel pour la bijouterie, l’horlogerie et le luxe.",
+  "lang": "fr",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F4F3FA",
+  "theme_color": "#F4F3FA",
+  "icons": [
+    { "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

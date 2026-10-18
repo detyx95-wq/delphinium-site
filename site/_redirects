@@ -1,0 +1,8 @@
+# Anciennes adresses du site (référencement conservé)
+/merci.html      /merci/                 301
+/bague           /realisations/corolle/  301
+/bague/*         /realisations/corolle/  301
+/spire.html      /configurateur/         301
+
+# page d’erreur de la version anglaise
+/en/*           /en/404.html            404

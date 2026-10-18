@@ -1,0 +1,3 @@
+# Netlify : seul le dossier site/ est publié (tools/, maquettes/, archives/ restent privés)
+[build]
+  publish = "site"

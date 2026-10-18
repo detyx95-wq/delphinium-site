@@ -1,0 +1,17 @@
+# Fichiers locaux, jamais versionnés
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+desktop.ini
+node_modules/
+.env*
+*.log
+# environnement de travail local (Claude, skills, maquettes, archives)
+.claude/
+.agents/
+.taste-skill/
+maquettes/
+archives/
+# rapports internes (audit sécurité/perf) : gardés en local, jamais publiés
+docs/

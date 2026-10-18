@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:'C';src:url(cormorant-garamond-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'J';src:url(jost-latin-400-normal.woff2) format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:#f5f3f7;font-family:'J';color:#1d1a2e;position:relative}
+.ring{position:absolute;right:-30px;top:-40px;width:780px;height:auto;
+  -webkit-mask-image:radial-gradient(60% 62% at 52% 52%,#000 62%,transparent 100%);mask-image:radial-gradient(60% 62% at 52% 52%,#000 62%,transparent 100%)}
+.plate{position:absolute;left:64px;top:56px;width:228px;padding:12px 15px 11px;background:rgba(59,47,138,.86);border-radius:4px;
+  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.3),inset 0 1px 0 rgba(255,255,255,.22)}
+.plate img{display:block;width:100%}
+h1{position:absolute;left:64px;top:180px;width:560px;font-family:'C';font-weight:500;font-size:62px;line-height:.98;letter-spacing:-.02em}
+h1 em{font-style:normal;color:#3B2F8A}
+.sub{position:absolute;left:66px;top:452px;display:flex;gap:16px;align-items:center;font-size:22px;color:#4a4660}
+.sub i{width:9px;height:9px;border:1.4px solid #C4A97D;transform:rotate(45deg)}
+.url{position:absolute;left:66px;bottom:52px;font-size:19px;letter-spacing:.06em;color:#7d6139}
+svg.sk{position:absolute;inset:0;width:1200px;height:630px;overflow:visible}
+.g{stroke:rgba(196,169,125,.75);stroke-width:1.2;fill:none;stroke-linecap:round}
+.l{stroke:rgba(91,78,204,.28);stroke-width:1.1;fill:none;stroke-linecap:round}
+.m{stroke:#C4A97D;stroke-width:1.4;fill:none}
+</style></head>
+<body>
+<img class="ring" src="ring.jpg" alt="">
+<svg class="sk" viewBox="0 0 1200 630">
+  <defs><filter id="p"><feTurbulence type="fractalNoise" baseFrequency=".85" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.3"/></filter></defs>
+  <g filter="url(#p)">
+    <circle class="g" cx="852" cy="300" r="218" stroke-dasharray="5 7"/>
+    <circle class="l" cx="852" cy="300" r="240"/>
+    <path class="g" d="M852 58V560M600 286H1150"/>
+    <path class="l" d="M640 572H1064M640 563V581M1064 563V581"/>
+    <path class="l" d="M1110 92V508M1101 92H1119M1101 508H1119"/>
+    <path class="g" d="M56 48L300 47M296 40L297 128M302 124L58 125M62 131L61 44"/>
+  </g>
+  <path class="m" d="M1104 66L1114 76L1104 86L1094 76Z"/>
+  <circle class="m" cx="618" cy="472" r="8"/><path class="m" d="M618 464V480M610 472H626"/>
+</svg>
+<div class="plate"><img src="logo-delphinium.webp" alt=""></div>
+<h1>Transformez vos produits en <em>expériences immersives</em></h1>
+<p class="sub"><span>Configurateurs 3D</span><i></i><span>Bijouterie</span><i></i><span>Horlogerie</span><i></i><span>Luxe</span></p>
+<p class="url">DELPHINIUM.PRO · PARIS</p>
+</body></html>

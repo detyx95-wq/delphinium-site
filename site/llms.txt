@@ -1,0 +1,27 @@
+# Delphinium Interactive
+
+> Studio parisien qui conçoit des configurateurs 3D temps réel sur mesure pour la bijouterie, l’horlogerie et le luxe : les pièces sont modélisées au matériau près et chaque variante (métal, pierre, motif, gravure) est rendue instantanément dans le navigateur, sur ordinateur et mobile, puis intégrée à la boutique en ligne (Shopify, WooCommerce, PrestaShop ou site sur mesure) en deux à trois semaines.
+
+- Société : Delphinium SAS, 47 rue Vivienne, 75002 Paris — RCS Paris 107 178 824
+- Contact : contact@delphinium.pro — 07 56 91 53 63
+- Clientèle : professionnels uniquement (B2B)
+
+## Pages principales
+
+- [English version](https://delphinium.pro/en/) : site complet en anglais
+
+- [Accueil](https://delphinium.pro/) : démonstration 3D de la collection Spire, studio, retour sur investissement sourcé, méthode, offres
+- [Configurateur Spire](https://delphinium.pro/configurateur/) : configurateur 3D d’une bague, d’un bracelet et d’un collier (métal, pierre, motif)
+- [Contact](https://delphinium.pro/contact/) : questionnaire pour démarrer un projet
+
+## Offres
+
+- Pro : à partir de 1 290 € HT — un produit configurable, 8 variantes, intégration iFrame ou glTF, environ deux semaines
+- Premium : à partir de 1 690 € HT — scène sur mesure, 16 variantes, transitions animées, réalité augmentée, environ trois semaines
+- Maintenance : 79 € HT par mois
+
+## Informations légales
+
+- [Mentions légales](https://delphinium.pro/mentions-legales/)
+- [Politique de confidentialité](https://delphinium.pro/confidentialite/)
+- [Conditions générales de vente](https://delphinium.pro/cgv/)
