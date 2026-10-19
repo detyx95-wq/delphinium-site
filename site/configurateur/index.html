@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://app.vectary.com 'sha256-6AiAVyTBWCyA4dyi4MTIwvq7f0toHxu5vrXB75gmKk0='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; frame-src https://app.vectary.com; connect-src 'self' https://app.vectary.com; base-uri 'none'; form-action 'none'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://app.vectary.com 'sha256-rnyJntpQqAnvIy9kFXHmmd1wLPOaqCkncgdBhcupE+c='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; frame-src https://app.vectary.com; connect-src 'self' https://app.vectary.com; base-uri 'none'; form-action 'none'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="light">
 <meta name="description" content="Configurez en 3D la bague, le bracelet ou le collier Spire : métal, pierre et motif rendus en temps réel. Démonstration du studio Delphinium Interactive, Paris.">
@@ -522,15 +522,15 @@ const METALS = {
 };
 const STONES = {
   saphir_blanc:{delta:0,    c:['#ffffff','#e4e9f4','#b9c3da']},
-  aigue_marine:{delta:-150, c:['#e4f6fb','#8fd0e3','#4c9db8']},
-  morganite:   {delta:-200, c:['#ffe6ec','#f1a9bd','#d9798f']}
+  aigue_marine:{delta:-225, c:['#e4f6fb','#8fd0e3','#4c9db8']},
+  morganite:   {delta:-300, c:['#ffe6ec','#f1a9bd','#d9798f']}
 };
 const MOTIFS = { facettage:{}, pavage:{}, grille:{} };
 // Le prix reste un montant unique, sans détail.
 const PRODUCTS = {
-  bague:   { base:1290, groups:['metal','stone'] },
-  bracelet:{ base:1490, groups:['metal','motif'] },
-  collier: { base:1690, groups:['metal'], fixedStone:true }
+  bague:   { base:1935, groups:['metal','stone'] },
+  bracelet:{ base:2235, groups:['metal','motif'] },
+  collier: { base:2535, groups:['metal'], fixedStone:true }
 };
 const ORDER = ['bague','bracelet','collier'];
 const GROUP_ITEMS = { metal:METALS, stone:STONES, motif:MOTIFS };

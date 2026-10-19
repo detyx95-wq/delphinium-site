@@ -67,3 +67,60 @@ if(foot && word && !RM){
   addEventListener('scroll', () => { if(!ticking){ ticking = true; requestAnimationFrame(upd); } }, {passive:true});
   upd();
 }
+
+/* ---------- Collection : une photo cliquée s'agrandit, puis revient à sa place
+   (clic n'importe où, défilement, Échap) ---------- */
+(() => {
+  const imgs = [...document.querySelectorAll('.wall .t img')];
+  if(!imgs.length) return;
+  let open = null;
+  const fit = (w, h) => {                       // taille maximale à l'écran, proportions conservées
+    const k = Math.min(innerWidth * .9 / w, innerHeight * .82 / h);
+    return [w * k, h * k];
+  };
+  function close(){
+    if(!open || open.closing) return;
+    const o = open; o.closing = true;
+    const r = o.src.getBoundingClientRect();
+    o.img.style.transform = `translate(${r.left}px,${r.top}px) scale(${r.width / o.w})`;
+    o.veil.classList.remove('on'); o.cap?.classList.remove('on');
+    setTimeout(() => { o.img.remove(); o.veil.remove(); o.cap?.remove(); o.fig.classList.remove('zooming'); o.src.focus?.({ preventScroll:true }); }, RM ? 0 : 600);
+    open = null;
+    removeEventListener('scroll', close); removeEventListener('keydown', onKey);
+  }
+  const onKey = e => { if(e.key === 'Escape') close(); };
+  function zoom(src){
+    if(open) return close();
+    const fig = src.closest('.t'), r = src.getBoundingClientRect();
+    const ratio = src.naturalWidth / src.naturalHeight || r.width / r.height;
+    const [W, H] = fit(ratio * 1000, 1000);
+    const veil = document.createElement('div'); veil.className = 'zoom-veil';
+    const img = document.createElement('img');
+    img.className = 'zoom-img'; img.src = src.currentSrc || src.src; img.alt = src.alt;
+    Object.assign(img.style, { left:'0px', top:'0px', width:W + 'px', height:H + 'px' });
+    // départ : exactement sur la vignette (même cadrage), arrivée : centrée en grand
+    img.style.transform = `translate(${r.left}px,${r.top}px) scale(${r.width / W})`;
+    let cap = null;
+    const caption = fig.querySelector('figcaption');
+    if(caption){ cap = document.createElement('p'); cap.className = 'zoom-cap'; cap.textContent = [...caption.children].map(c => c.textContent.trim()).filter(Boolean).join(' · '); }
+    document.body.append(veil, img); if(cap) document.body.append(cap);
+    fig.classList.add('zooming');
+    void img.offsetWidth;
+    requestAnimationFrame(() => {
+      img.style.transform = `translate(${(innerWidth - W) / 2}px,${(innerHeight - H) / 2}px) scale(1)`;
+      veil.classList.add('on'); cap?.classList.add('on');
+    });
+    open = { src, fig, img, veil, cap, w:W };
+    veil.addEventListener('click', close); img.addEventListener('click', close);
+    setTimeout(() => { addEventListener('scroll', close, { passive:true }); }, 80);
+    addEventListener('keydown', onKey);
+  }
+  imgs.forEach(im => {
+    im.tabIndex = 0; im.setAttribute('role', 'button');
+    im.setAttribute('aria-label', (document.documentElement.lang === 'en' ? 'Enlarge: ' : 'Agrandir : ') + im.alt);
+    im.addEventListener('click', () => zoom(im));
+    im.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); zoom(im); } });
+  });
+  addEventListener('wheel', () => open && close(), { passive:true });
+  addEventListener('touchmove', () => open && close(), { passive:true });
+})();

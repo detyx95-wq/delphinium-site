@@ -35,7 +35,7 @@ def en_url(u):
     if u.startswith('/realisations/corolle/'):
         return '/realisations/corolle/?lang=en'
     if u.startswith('/configurateur/'):
-        return '/configurateur/?lang=en' if u == '/configurateur/' else u
+        return '/configurateur/?lang=en'
     for fr, en in PREFIX:
         if u.startswith(fr):
             return en + u[len(fr):]
